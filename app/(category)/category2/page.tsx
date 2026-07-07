@@ -2,8 +2,8 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useFormContext, CloItem, PloItem, ActivityItem, IS_DEV_MODE } from "../FormContext";
-import FormShell from "../components/FormShell";
+import { useFormContext, CloItem, PloItem, ActivityItem, IS_DEV_MODE } from "../../FormContext";
+import FormShell from "../../components/FormShell";
 
 export default function Category2Page() {
   const router = useRouter();
@@ -26,6 +26,23 @@ export default function Category2Page() {
 
   const handlePrev = () => {
     router.push("/category1");
+  };
+
+  const handleNext = () => {
+    if (IS_DEV_MODE) {
+      router.push("/category3");
+      return;
+    }
+    
+    const hasEmptyClo = form.clos.some(c => !c.clo.trim() || !c.outcome.trim() || !c.level.trim());
+    const hasEmptyPlo = form.plos.some(p => !p.clo.trim() || !p.outcome.trim() || !p.ylo.trim() || !p.plo.trim() || !p.splo.trim());
+    const hasEmptyActivity = form.activities.some(a => !a.text.trim());
+    
+    if (hasEmptyClo || hasEmptyPlo || hasEmptyActivity) {
+      alert("กรุณากรอกข้อมูลในหมวดที่ 2 ให้ครบถ้วนทุกช่อง (CLOs, PLOs, และวิธีการประเมิน)");
+      return;
+    }
+    router.push("/category3");
   };
 
   const addCloRow = () => {
@@ -76,7 +93,7 @@ export default function Category2Page() {
     "w-full border border-transparent bg-transparent font-inherit text-[13px] text-gray-700 px-[6px] py-[6px] rounded-[6px] focus:outline-none focus:border-[#d5ae52] focus:bg-white print:border-transparent print:bg-transparent transition-colors duration-200";
 
   return (
-    <FormShell onPrev={handlePrev} onNext={() => router.push("/category3")}>
+    <FormShell onPrev={handlePrev} onNext={handleNext}>
       {/* หมวดที่ 2 */}
       <div className="py-[26px] px-[36px] border-t border-gray-200">
         <div className="flex items-center gap-[10px] m-0 mb-[18px]">

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import FormShell from "../components/FormShell";
+import FormShell from "../../components/FormShell";
 
 export default function Category5Page() {
   const router = useRouter();
@@ -23,11 +23,11 @@ export default function Category5Page() {
     setImprovements([...improvements, ""]);
   };
 
-  const removeImprove = (index) => {
+  const removeImprove = (index: number) => {
     setImprovements(improvements.filter((_, i) => i !== index));
   };
 
-  const updateImprove = (index, value) => {
+  const updateImprove = (index: number, value: string) => {
     const newImprovements = [...improvements];
     newImprovements[index] = value;
     setImprovements(newImprovements);

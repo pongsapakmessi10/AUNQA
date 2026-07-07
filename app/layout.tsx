@@ -9,11 +9,9 @@ const notoSansThai = Noto_Sans_Thai({
 });
 
 export const metadata: Metadata = {
-  title: "เค้าโครงรายวิชา",
+  title: "AUNQA",
   description: "เค้าโครงรายวิชาและผลลัพธ์การเรียนรู้ที่คาดหวัง",
 };
-
-import { FormProvider } from "./FormContext";
 
 export default function RootLayout({
   children,
@@ -23,11 +21,7 @@ export default function RootLayout({
   return (
     <html lang="th" className={notoSansThai.variable}>
       <body className="bg-gray-100 min-h-screen text-gray-900">
-        <FormProvider>
-          <main className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            {children}
-          </main>
-        </FormProvider>
+        {children}
       </body>
     </html>
   );

@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-export const IS_DEV_MODE = true; 
+export const IS_DEV_MODE = false; 
 
 
 export interface CloItem {
@@ -26,6 +26,38 @@ export interface ActivityItem {
   text: string;
 }
 
+export interface Instructor {
+  id: string;
+  title: string;
+  firstName: string;
+  lastName: string;
+  contact: string;
+}
+
+export interface EvaluationSubItem {
+  id: string;
+  method: string;
+  proportion: string;
+}
+
+export interface EvaluationConfig {
+  count: string;
+  items: EvaluationSubItem[];
+}
+
+export interface EvaluationSummaryItem {
+  id: string;
+  evalTime: string;
+  selectedClos: string[];
+  note: string;
+}
+
+export interface EvaluationData {
+  quiz: EvaluationConfig;
+  homework: EvaluationConfig;
+  activity: EvaluationConfig;
+}
+
 interface FormContextType {
   courseId: string;
   credit: string;
@@ -35,17 +67,20 @@ interface FormContextType {
   studyDay: string;
   studyTime: string;
   studyLocation: string;
-  instructors: string;
-  contact: string;
-  extraContact: string;
+  responsiblePerson: Instructor;
+  instructorsList: Instructor[];
   consultHours: string;
   descTh: string;
   descEn: string;
   updateDate: string;
+  gradingPattern: string;
   
   clos: CloItem[];
   plos: PloItem[];
   activities: ActivityItem[];
+  evaluationData: EvaluationData;
+  evaluationSummaries: Record<string, EvaluationSummaryItem>;
+  summaryRowOrder: string[];
   
   // Update state functions
   setCourseId: (v: string) => void;
@@ -56,17 +91,20 @@ interface FormContextType {
   setStudyDay: (v: string) => void;
   setStudyTime: (v: string) => void;
   setStudyLocation: (v: string) => void;
-  setInstructors: (v: string) => void;
-  setContact: (v: string) => void;
-  setExtraContact: (v: string) => void;
+  setResponsiblePerson: (v: Instructor) => void;
+  setInstructorsList: (v: Instructor[]) => void;
   setConsultHours: (v: string) => void;
   setDescTh: (v: string) => void;
   setDescEn: (v: string) => void;
   setUpdateDate: (v: string) => void;
+  setGradingPattern: (v: string) => void;
   
   setClos: (v: CloItem[]) => void;
   setPlos: (v: PloItem[]) => void;
   setActivities: (v: ActivityItem[]) => void;
+  setEvaluationData: (v: EvaluationData) => void;
+  setEvaluationSummaries: (v: Record<string, EvaluationSummaryItem>) => void;
+  setSummaryRowOrder: (v: string[]) => void;
   
   // Validation
   isCategory1Valid: () => boolean;
@@ -88,13 +126,21 @@ const defaultContext: FormContextType = {
   studyDay: "",
   studyTime: "",
   studyLocation: "",
-  instructors: "ผศ.สมชาย ใจดี",
-  contact: "",
-  extraContact: "",
+  responsiblePerson: {
+    id: "1",
+    title: "ผศ.",
+    firstName: "สมชาย",
+    lastName: "ใจดี",
+    contact: "",
+  },
+  instructorsList: [
+    { id: "1", title: "", firstName: "", lastName: "", contact: "" }
+  ],
   consultHours: "",
   descTh: "",
   descEn: "",
   updateDate: "",
+  gradingPattern: "1",
   
   clos: [
     { id: "1", clo: "1", outcome: "อธิบายหลักการและแนวคิดการประเมินวัฏจักรชีวิตของผลิตภัณฑ์ (LCA)", level: "R" },
@@ -112,6 +158,13 @@ const defaultContext: FormContextType = {
     { id: "4", text: "ยกตัวอย่างกรณีศึกษา" },
     { id: "5", text: "การบ้าน" }
   ],
+  evaluationData: {
+    quiz: { count: "", items: [] },
+    homework: { count: "", items: [] },
+    activity: { count: "", items: [] },
+  },
+  evaluationSummaries: {},
+  summaryRowOrder: [],
 
   setCourseId: () => {},
   setCredit: () => {},
@@ -121,16 +174,19 @@ const defaultContext: FormContextType = {
   setStudyDay: () => {},
   setStudyTime: () => {},
   setStudyLocation: () => {},
-  setInstructors: () => {},
-  setContact: () => {},
-  setExtraContact: () => {},
+  setResponsiblePerson: () => {},
+  setInstructorsList: () => {},
   setConsultHours: () => {},
   setDescTh: () => {},
   setDescEn: () => {},
   setUpdateDate: () => {},
+  setGradingPattern: () => {},
   setClos: () => {},
   setPlos: () => {},
   setActivities: () => {},
+  setEvaluationData: () => {},
+  setEvaluationSummaries: () => {},
+  setSummaryRowOrder: () => {},
   isCategory1Valid: () => false,
 };
 
@@ -152,21 +208,31 @@ export function FormProvider({ children }: { children: ReactNode }) {
   const [studyDay, setStudyDay] = useState("");
   const [studyTime, setStudyTime] = useState("");
   const [studyLocation, setStudyLocation] = useState("");
-  const [instructors, setInstructors] = useState("ผศ.สมชาย ใจดี");
-  const [contact, setContact] = useState("");
-  const [extraContact, setExtraContact] = useState("");
+  const [responsiblePerson, setResponsiblePerson] = useState<Instructor>(defaultContext.responsiblePerson);
+  const [instructorsList, setInstructorsList] = useState<Instructor[]>(defaultContext.instructorsList);
   const [consultHours, setConsultHours] = useState("");
   const [descTh, setDescTh] = useState("");
   const [descEn, setDescEn] = useState("");
   const [updateDate, setUpdateDate] = useState("");
+  const [gradingPattern, setGradingPattern] = useState("");
 
   const [clos, setClos] = useState<CloItem[]>(defaultContext.clos);
   const [plos, setPlos] = useState<PloItem[]>(defaultContext.plos);
   const [activities, setActivities] = useState<ActivityItem[]>(defaultContext.activities);
+  const [evaluationData, setEvaluationData] = useState<EvaluationData>(defaultContext.evaluationData);
+  const [evaluationSummaries, setEvaluationSummaries] = useState<Record<string, EvaluationSummaryItem>>(defaultContext.evaluationSummaries);
+  const [summaryRowOrder, setSummaryRowOrder] = useState<string[]>(defaultContext.summaryRowOrder);
 
   const isCategory1Valid = () => {
     const [start, end] = studyTime.split(" - ");
     const isTimeValid = !!(start?.trim() && end?.trim());
+
+    const areInstructorsValid = instructorsList.every(i => 
+      i.title.trim() !== "" && 
+      i.firstName.trim() !== "" && 
+      i.lastName.trim() !== "" && 
+      i.contact.trim() !== ""
+    );
 
     return (
       courseId.trim() !== "" &&
@@ -176,7 +242,12 @@ export function FormProvider({ children }: { children: ReactNode }) {
       studyDay.trim() !== "" &&
       isTimeValid &&
       studyLocation.trim() !== "" &&
-      instructors.trim() !== "" &&
+      responsiblePerson.title.trim() !== "" &&
+      responsiblePerson.firstName.trim() !== "" &&
+      responsiblePerson.lastName.trim() !== "" &&
+      responsiblePerson.contact.trim() !== "" &&
+      areInstructorsValid &&
+      consultHours.trim() !== "" &&
       descTh.trim() !== "" &&
       descEn.trim() !== ""
     );
@@ -193,16 +264,19 @@ export function FormProvider({ children }: { children: ReactNode }) {
         studyDay,
         studyTime,
         studyLocation,
-        instructors,
-        contact,
-        extraContact,
+        responsiblePerson,
+        instructorsList,
         consultHours,
         descTh,
         descEn,
         updateDate,
+        gradingPattern,
         clos,
         plos,
         activities,
+        evaluationData,
+        evaluationSummaries,
+        summaryRowOrder,
         setCourseId,
         setCredit,
         setTerm,
@@ -211,16 +285,19 @@ export function FormProvider({ children }: { children: ReactNode }) {
         setStudyDay,
         setStudyTime,
         setStudyLocation,
-        setInstructors,
-        setContact,
-        setExtraContact,
+        setResponsiblePerson,
+        setInstructorsList,
         setConsultHours,
         setDescTh,
         setDescEn,
         setUpdateDate,
+        setGradingPattern,
         setClos,
         setPlos,
         setActivities,
+        setEvaluationData,
+        setEvaluationSummaries,
+        setSummaryRowOrder,
         isCategory1Valid,
       }}
     >

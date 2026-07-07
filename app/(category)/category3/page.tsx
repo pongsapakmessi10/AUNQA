@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import FormShell from "../components/FormShell";
+import FormShell from "../../components/FormShell";
+import { useFormContext, IS_DEV_MODE } from "../../FormContext";
 
 interface LessonPlanItem {
   id: string;
@@ -18,6 +19,7 @@ interface LessonPlanItem {
 
 export default function Category3Page() {
   const router = useRouter();
+  const form = useFormContext();
 
   const [weeksBefore, setWeeksBefore] = useState<number | string>("");
   const [weeksAfter, setWeeksAfter] = useState<number | string>("");
@@ -41,6 +43,7 @@ export default function Category3Page() {
   // State สำหรับแจ้งเตือนตอนสร้างตารางใหม่
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [hasGeneratedOnce, setHasGeneratedOnce] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
 
   const handleGenerateClick = () => {
     if (hasGeneratedOnce) {
@@ -180,7 +183,19 @@ export default function Category3Page() {
   });
 
   const handlePrev = () => router.push("/category2");
-  const handleNext = () => router.push("/category4");
+  const handleNext = () => {
+    if (IS_DEV_MODE) {
+      router.push("/category4");
+      return;
+    }
+
+    const hasEmptyPlan = lessonPlans.some(p => !p.isExam && (!p.weekDate.trim() || !p.topic.trim() || !p.teachingMethod.trim() || !p.teamLocation.trim() || !p.hours.trim() || !p.instructor.trim()));
+    if (!teachingGuidelines.trim() || !materials.trim() || !tableRemark.trim() || hasEmptyPlan) {
+       setShowErrorPopup(true);
+       return;
+    }
+    router.push("/category4");
+  };
 
   const updateLesson = (id: string, field: keyof LessonPlanItem, value: string) => {
     setLessonPlans(
@@ -484,6 +499,29 @@ export default function Category3Page() {
         </div>
       )}
 
+      {showErrorPopup && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-[12px] shadow-xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in duration-200 border border-gray-100">
+            <div className="bg-red-500 px-6 py-4 flex items-center justify-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-[22px] w-[22px] text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <h3 className="text-[16px] font-bold text-white m-0 tracking-wide">แจ้งเตือน</h3>
+            </div>
+            <div className="p-[24px] text-center">
+              <p className="text-[14px] text-gray-700 font-medium mb-[24px] leading-relaxed">
+                กรุณากรอกข้อมูลแผนการสอนและ<br/>รายละเอียดการสอนให้ครบถ้วนทุกช่อง
+              </p>
+              <button
+                onClick={() => setShowErrorPopup(false)}
+                className="w-full bg-[#1b3860] hover:bg-[#142946] text-white font-bold py-[10px] px-[16px] rounded-[6px] transition-colors shadow-sm"
+              >
+                ตกลง
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </FormShell>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
 export default function FormShell({
@@ -16,6 +16,16 @@ export default function FormShell({
   isCategory1Valid?: boolean;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname === "/category1") document.title = "AUNQA - หมวดที่ 1";
+    else if (pathname === "/category2") document.title = "AUNQA - หมวดที่ 2";
+    else if (pathname === "/category3") document.title = "AUNQA - หมวดที่ 3";
+    else if (pathname === "/category4") document.title = "AUNQA - หมวดที่ 4";
+    else if (pathname === "/category5") document.title = "AUNQA - หมวดที่ 5";
+    else document.title = "AUNQA";
+  }, [pathname]);
 
   const handlePrint = () => {
     window.print();
