@@ -447,16 +447,6 @@ export default function Category4Page() {
                 รูปแบบที่ 2
               </label>
             </div>
-            {form.gradingPattern && !showDetails && (
-              <div className="flex justify-end mt-[12px]">
-                <button
-                  className="bg-[#1b3860] text-white px-[14px] py-[6px] rounded-[6px] text-[13px] font-bold hover:bg-[#142946] transition-colors shadow-sm"
-                  onClick={() => setShowDetails(true)}
-                >
-                  ตกลง
-                </button>
-              </div>
-            )}
           </div>
 
           {form.gradingPattern && (
@@ -575,6 +565,17 @@ export default function Category4Page() {
                   </div>
                 </div>
               </div>
+
+              {form.gradingPattern && !showDetails && (
+                <div className="flex justify-end mt-[16px]">
+                  <button
+                    className="bg-[#1b3860] text-white px-[18px] py-[8px] rounded-[6px] text-[13px] font-bold hover:bg-[#142946] transition-colors shadow-sm"
+                    onClick={() => setShowDetails(true)}
+                  >
+                    ตกลง
+                  </button>
+                </div>
+              )}
 
               {/* Dynamic Evaluation Configuration Section */}
               {showDetails && (

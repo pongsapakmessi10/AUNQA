@@ -27,7 +27,7 @@ export default function Category3Page() {
   const [lessonPlans, setLessonPlans] = useState<LessonPlanItem[]>([]);
 
   const [instructors, setInstructors] = useState<string[]>([
-    "อ.สุวดี",
+    "อ.สมหญิง",
     "อ.ใจดี",
     "อ.สมชาย",
   ]);
@@ -299,7 +299,7 @@ export default function Category3Page() {
                 <th className={`${thClass} min-w-[120px] sm:min-w-[110px] sm:w-[110px]`}>สัปดาห์ที่ /<br />วันที่สอน</th>
                 <th className={`${thClass} min-w-[250px] sm:min-w-[200px]`}>หัวข้อ</th>
                 <th className={`${thClass} min-w-[180px] sm:min-w-[150px] sm:w-[150px]`}>รูปแบบการสอน/<br />กิจกรรม</th>
-                <th className={`${thClass} min-w-[180px] sm:min-w-[150px] sm:w-[150px]`}>สถานที่ / ทีม</th>
+                <th className={`${thClass} min-w-[180px] sm:min-w-[150px] sm:w-[150px]`}>CLOS</th>
                 <th className={`${thClass} min-w-[80px] sm:min-w-[70px] sm:w-[70px]`}>ชั่วโมง</th>
                 <th className={`${thClass} min-w-[150px] sm:min-w-[100px] sm:w-[100px]`}>ผู้สอน</th>
                 <th className={`${thClass} min-w-[50px] sm:min-w-[40px] sm:w-[40px]`}></th>
@@ -372,13 +372,23 @@ export default function Category3Page() {
                       />
                     </td>
                     <td className={tdClass}>
-                      <textarea
-                        rows={1}
-                        className={`${inputClass} min-h-[38px] overflow-hidden text-blue-700`}
-                        value={item.teamLocation}
-                        placeholder="เช่น ทีม A..."
-                        onChange={(e) => updateLesson(item.id, "teamLocation", e.target.value)}
-                      />
+                      <div className="flex flex-wrap gap-[6px] justify-center  text-[12px]">
+                        {form.plos.map((plo: any) => (
+                          <label key={plo.id} className="flex items-center gap-[4px] cursor-pointer text-gray-700 hover:text-[#d5ae52]">
+                            <input
+                              type="checkbox"
+                              checked={item.teamLocation ? item.teamLocation.split(',').includes(plo.id) : false}
+                              onChange={() => {
+                                const currentClos = item.teamLocation ? item.teamLocation.split(',') : [];
+                                const newClos = currentClos.includes(plo.id) ? currentClos.filter(c => c !== plo.id) : [...currentClos, plo.id];
+                                updateLesson(item.id, "teamLocation", newClos.join(','));
+                              }}
+                              className="accent-[#d5ae52] w-[13px] h-[13px] cursor-pointer"
+                            />
+                            CLO {plo.clo}
+                          </label>
+                        ))}
+                      </div>
                     </td>
                     <td className={tdClass}>
                       <input
@@ -399,16 +409,34 @@ export default function Category3Page() {
                       />
                     </td>
                     <td className={tdClass}>
-                      <select
-                        className={`${inputClass} appearance-none cursor-pointer border-gray-300 border text-center`}
-                        value={item.instructor}
-                        onChange={(e) => updateLesson(item.id, "instructor", e.target.value)}
-                      >
-                        <option value="" disabled>เลือกผู้สอน</option>
-                        {instructors.map((instructor, idx) => (
-                          <option key={idx} value={instructor}>{instructor}</option>
-                        ))}
-                      </select>
+                      {item.instructor === "__custom__" || (item.instructor && !instructors.includes(item.instructor) && item.instructor !== "") ? (
+                        <div className="flex items-center gap-[4px]">
+                          <input
+                            className={`${inputClass} border-gray-300 border flex-1`}
+                            placeholder="พิมพ์ชื่อผู้สอน..."
+                            value={item.instructor === "__custom__" ? "" : item.instructor}
+                            onChange={(e) => updateLesson(item.id, "instructor", e.target.value)}
+                            autoFocus
+                          />
+                          <button
+                            className="text-gray-400 hover:text-red-500 text-[14px] px-[4px] transition-colors"
+                            onClick={() => updateLesson(item.id, "instructor", "")}
+                            title="ยกเลิก"
+                          >✕</button>
+                        </div>
+                      ) : (
+                        <select
+                          className={`${inputClass} appearance-none cursor-pointer border-gray-300 border text-center`}
+                          value={item.instructor}
+                          onChange={(e) => updateLesson(item.id, "instructor", e.target.value)}
+                        >
+                          <option value="" disabled>เลือกผู้สอน</option>
+                          {instructors.map((instructor, idx) => (
+                            <option key={idx} value={instructor}>{instructor}</option>
+                          ))}
+                          <option value="__custom__">อื่นๆ...</option>
+                        </select>
+                      )}
                     </td>
                     <td className={`${tdClass} text-center align-middle`}>
                       <button
