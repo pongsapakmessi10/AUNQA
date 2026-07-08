@@ -17,8 +17,11 @@ export default function Category1Page() {
       setShowErrors(true);
       const requiredFields = [
         { id: "courseId", value: form.courseId },
-        { id: "credit", value: form.credit },
-        { id: "term", value: form.term },
+        { id: "creditLecture", value: form.creditLecture },
+        { id: "creditLab", value: form.creditLab },
+        { id: "creditSelfStudy", value: form.creditSelfStudy },
+        { id: "termSemester", value: form.termSemester },
+        { id: "termYear", value: form.termYear },
         { id: "group", value: form.group },
         { id: "studyDay", value: form.studyDay },
         { id: "studyTime", value: form.studyTime },
@@ -58,7 +61,7 @@ export default function Category1Page() {
     const baseClass = `font-inherit text-[14px] border rounded-[8px] ${customPadding} bg-gray-50 text-gray-700 resize-y focus:outline-none print:border-transparent print:shadow-none print:bg-transparent transition-colors duration-200`;
     return `${baseClass} ${
       isError
-        ? "border-red-500 focus:border-red-500 focus:ring focus:ring-red-500/20 bg-red-50"
+        ? "border-yellow-500 focus:border-yellow-500 focus:ring focus:ring-yellow-500/20 bg-yellow-50"
         : "border-gray-200 focus:border-[#d5ae52] focus:ring focus:ring-[#d5ae52]/20 focus:bg-white"
     }`;
   };
@@ -88,29 +91,57 @@ export default function Category1Page() {
               onChange={(e) => form.setCourseId(e.target.value)}
             />
           </div>
-          <div className="flex flex-col gap-[5px]">
+          <div className="flex flex-col gap-[5px] h-full">
             <label className="text-[13px] font-semibold text-[#1b3860]">
               จำนวนหน่วยกิต <span className="text-red-500">*</span>
             </label>
-            <input
-              id="credit"
-              className={getInputClass(form.credit)}
-              placeholder="เช่น 3 (3-0-6) บรรยาย 3 หน่วยกิต"
-              value={form.credit}
-              onChange={(e) => form.setCredit(e.target.value)}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-[10px] mt-auto">
+              <div className="flex flex-col justify-end gap-[5px] h-full">
+                <label className="text-[12px] text-gray-600">ชั่วโมงบรรยาย (Lecture)</label>
+                <input
+                  id="creditLecture"
+                  className={getInputClass(form.creditLecture)}
+                  placeholder="เช่น 3"
+                  value={form.creditLecture}
+                  onChange={(e) => form.setCreditLecture(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col justify-end gap-[5px] h-full">
+                <label className="text-[12px] text-gray-600">ชั่วโมงปฏิบัติการ (Lab/Practical)</label>
+                <input
+                  id="creditLab"
+                  className={getInputClass(form.creditLab)}
+                  placeholder="เช่น 0"
+                  value={form.creditLab}
+                  onChange={(e) => form.setCreditLab(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col justify-end gap-[5px] h-full">
+                <label className="text-[12px] text-gray-600">ชั่วโมงศึกษาด้วยตนเอง (Self-study)</label>
+                <input
+                  id="creditSelfStudy"
+                  className={getInputClass(form.creditSelfStudy)}
+                  placeholder="เช่น 6"
+                  value={form.creditSelfStudy}
+                  onChange={(e) => form.setCreditSelfStudy(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col gap-[5px]">
+          <div className="flex flex-col gap-[5px] h-full">
             <label className="text-[13px] font-semibold text-[#1b3860]">
               ภาค/ปีการศึกษา <span className="text-red-500">*</span>
             </label>
-            <input
-              id="term"
-              className={getInputClass(form.term)}
-              placeholder="เช่น x/2568"
-              value={form.term}
-              onChange={(e) => form.setTerm(e.target.value)}
-            />
+            <div className="flex flex-col justify-end gap-[5px] mt-auto">
+              <label className="text-[12px] text-gray-600">ปีการศึกษา (Academic Year)</label>
+              <input
+                id="termYear"
+                className={getInputClass(form.termYear)}
+                placeholder="เช่น 2568"
+                value={form.termYear}
+                onChange={(e) => form.setTermYear(e.target.value)}
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">

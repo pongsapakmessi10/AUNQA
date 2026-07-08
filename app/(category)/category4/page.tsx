@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import FormShell from "../../components/FormShell";
 import { useFormContext, EvaluationConfig, EvaluationSubItem, IS_DEV_MODE } from "../../FormContext";
 
-function EvaluationSummaryTable({ form }: { form: any }) {
+function EvaluationSummaryTable({ form, showErrors }: { form: any, showErrors?: boolean }) {
   const allItems = [
     { id: "midterm", groupName: "สอบกลางภาค (2 ชั่วโมง)", method: "", proportion: form.gradingPattern === "1" ? "25" : "30" },
     { id: "final", groupName: "สอบปลายภาค (3 ชั่วโมง)", method: "", proportion: form.gradingPattern === "1" ? "35" : "30" },
@@ -31,7 +31,7 @@ function EvaluationSummaryTable({ form }: { form: any }) {
       return sum + (parseFloat(row.selectedItem.proportion) || 0);
     }
     return sum;
-  }, 0) + 60;
+  }, 0);
 
   return (
     <div className="mt-[32px] pt-[24px] border-t border-gray-200">
@@ -75,8 +75,12 @@ function EvaluationSummaryTable({ form }: { form: any }) {
                 <tr key={`row-${index}`} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                   <td className="px-[12px] py-[10px] border-b border-r border-gray-200">
                     <select
-                      className="w-full border border-gray-300 rounded-[6px] px-[8px] py-[6px] text-[13px] outline-none focus:border-[#d5ae52] bg-white"
-                      value={selectedId}
+                      className={`w-full border rounded-[6px] px-[4px] py-[6px] text-[13px] outline-none transition-colors ${
+                        showErrors && !selectedId
+                          ? "border-yellow-500 bg-yellow-50 focus:border-yellow-500 focus:ring focus:ring-yellow-500/20 text-yellow-700"
+                          : "border-gray-300 focus:border-gray-400"
+                      }`}
+                      value={selectedId || ""}
                       onChange={(e) => {
                         const newOrder = [...order];
                         newOrder[index] = e.target.value;
@@ -100,7 +104,11 @@ function EvaluationSummaryTable({ form }: { form: any }) {
                   </td>
                   <td className="px-[12px] py-[10px] border-b border-r border-gray-200 align-top">
                     <input
-                      className="w-full border border-gray-300 rounded-[6px] px-[8px] py-[6px] text-[13px] outline-none focus:border-[#d5ae52] disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className={`w-full border rounded-[6px] px-[8px] py-[6px] text-[13px] outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed ${
+                        showErrors && summary && !summary.evalTime.trim()
+                          ? "border-yellow-500 bg-yellow-50 focus:border-yellow-500 focus:ring focus:ring-yellow-500/20"
+                          : "border-gray-300 focus:border-gray-400"
+                      }`}
                       placeholder="เช่น สัปดาห์ที่ 5"
                       value={summary ? summary.evalTime : ""}
                       onChange={(e) => updateSummary("evalTime", e.target.value)}
@@ -110,7 +118,10 @@ function EvaluationSummaryTable({ form }: { form: any }) {
                   <td className="px-[12px] py-[10px] border-b border-r border-gray-200 align-top">
                     <div className="flex flex-wrap gap-[8px] justify-center">
                       {form.plos.map((plo: any) => (
-                        <label key={plo.id} className={`flex items-center gap-[4px] cursor-pointer text-gray-700 hover:text-[#d5ae52] ${!selectedItem ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                        <label key={plo.id} className={`flex items-center gap-[4px] cursor-pointer hover:text-[#d5ae52] ${
+                          !selectedItem ? 'opacity-50 cursor-not-allowed text-gray-700' :
+                          (showErrors && summary && summary.selectedClos.length === 0 ? 'text-yellow-600 font-semibold' : 'text-gray-700')
+                        }`}>
                           <input
                             type="checkbox"
                             checked={summary ? summary.selectedClos.includes(plo.id) : false}
@@ -126,7 +137,7 @@ function EvaluationSummaryTable({ form }: { form: any }) {
                   <td className="px-[12px] py-[10px] border-b border-gray-200 align-top">
                     <textarea
                       rows={2}
-                      className="w-full border border-gray-300 rounded-[6px] px-[8px] py-[6px] text-[13px] outline-none focus:border-[#d5ae52] resize-y disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="w-full border border-gray-300 rounded-[6px] px-[8px] py-[6px] text-[13px] outline-none focus:border-gray-400 resize-y disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="หมายเหตุ"
                       value={summary ? summary.note : ""}
                       onChange={(e) => updateSummary("note", e.target.value)}
@@ -157,11 +168,13 @@ function ConfigurableEvaluationItem({
   targetPercent,
   config,
   onChange,
+  showErrors,
 }: {
   title: string;
   targetPercent: number;
   config: EvaluationConfig;
   onChange: (newConfig: EvaluationConfig) => void;
+  showErrors?: boolean;
 }) {
   const currentTotal = config.items.reduce(
     (sum, item) => sum + (parseFloat(item.proportion) || 0),
@@ -208,7 +221,7 @@ function ConfigurableEvaluationItem({
             จำนวนครั้ง:
           </label>
           <select
-            className="border border-gray-200 rounded-[6px] px-[8px] py-[4px] text-[13px] outline-none focus:border-[#d5ae52] bg-gray-50"
+            className="border border-gray-200 rounded-[6px] px-[8px] py-[4px] text-[13px] outline-none focus:border-gray-400 bg-gray-50"
             value={config.count}
             onChange={handleCountChange}
           >
@@ -254,7 +267,11 @@ function ConfigurableEvaluationItem({
                     </td>
                     <td className="px-[8px] py-[6px] border-b border-gray-200">
                       <input
-                        className="w-full border border-gray-200 rounded-[4px] px-[8px] py-[6px] outline-none focus:border-[#d5ae52] focus:bg-white bg-gray-50 text-gray-700 transition-colors"
+                        className={`w-full border rounded-[4px] px-[8px] py-[6px] outline-none transition-colors ${
+                          showErrors && !item.method.trim()
+                            ? "border-yellow-500 bg-yellow-50 focus:border-yellow-500 focus:ring focus:ring-yellow-500/20"
+                            : "border-gray-200 focus:border-gray-400 focus:bg-white bg-gray-50 text-gray-700"
+                        }`}
                         placeholder="ระบุวิธีการ..."
                         value={item.method}
                         onChange={(e) =>
@@ -267,10 +284,10 @@ function ConfigurableEvaluationItem({
                         type="number"
                         min="0"
                         max="100"
-                        className={`w-full border rounded-[4px] px-[8px] py-[6px] outline-none focus:border-[#d5ae52] text-center transition-colors ${
+                        className={`w-full border rounded-[4px] px-[8px] py-[6px] outline-none text-center transition-colors ${
                           !isValid
-                            ? "border-red-400 bg-red-50 text-red-700"
-                            : "border-gray-200 bg-gray-50 text-gray-700 focus:bg-white"
+                            ? "border-yellow-500 bg-yellow-50 focus:border-yellow-500 text-yellow-700 focus:ring focus:ring-yellow-500/20"
+                            : "border-gray-200 bg-gray-50 text-gray-700 focus:bg-white focus:border-gray-400"
                         }`}
                         value={item.proportion}
                         onChange={(e) =>
@@ -284,8 +301,8 @@ function ConfigurableEvaluationItem({
             </table>
           </div>
           {!isValid && (
-            <p className="text-red-500 text-[12px] mt-[8px] font-medium flex items-center gap-[4px]">
-              <span>⚠️</span> สัดส่วนรวมต้องเท่ากับ {targetPercent}% (ปัจจุบันรวม {currentTotal}%)
+            <p className="text-yellow-600 text-[12px] mt-[8px] font-medium flex items-center gap-[4px]">
+              สัดส่วนรวมต้องเท่ากับ {targetPercent}% (ปัจจุบันรวม {currentTotal}%)
             </p>
           )}
         </div>
@@ -301,6 +318,9 @@ export default function Category4Page() {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [showErrors, setShowErrors] = useState(false);
+  const [pendingPattern, setPendingPattern] = useState("");
+  const [showConfirmChange, setShowConfirmChange] = useState(false);
 
   const quizTarget = form.gradingPattern === "1" ? 20 : 10;
   const hwTarget = form.gradingPattern === "1" ? 10 : 15;
@@ -334,11 +354,13 @@ export default function Category4Page() {
     if (!form.gradingPattern) {
       setErrorMsg("กรุณาเลือกรูปแบบการประเมินผล");
       setShowErrorPopup(true);
+      setShowErrors(true);
       return;
     }
     if (!isConfirmed) {
       setErrorMsg("กรุณากรอกรายละเอียดการประเมินผลให้ครบถ้วนและกดยืนยัน (ปุ่มสีทอง)");
       setShowErrorPopup(true);
+      setShowErrors(true);
       return;
     }
 
@@ -346,6 +368,7 @@ export default function Category4Page() {
     if (form.summaryRowOrder.length !== rowCount || form.summaryRowOrder.includes("")) {
       setErrorMsg("กรุณาเลือกกิจกรรมในตารางสรุปแผนการประเมินผลให้ครบทุกช่อง");
       setShowErrorPopup(true);
+      setShowErrors(true);
       return;
     }
 
@@ -357,6 +380,7 @@ export default function Category4Page() {
     if (hasEmptySummary) {
       setErrorMsg("กรุณากรอกช่วงเวลาประเมินและเลือก CLO ให้ครบทุกแถวในตารางสรุป (หมายเหตุ: จะกรอกหรือไม่ก็ได้)");
       setShowErrorPopup(true);
+      setShowErrors(true);
       return;
     }
 
@@ -389,9 +413,14 @@ export default function Category4Page() {
                   value="1"
                   checked={form.gradingPattern === "1"}
                   onChange={(e) => {
-                    form.setGradingPattern(e.target.value);
-                    setShowDetails(false);
-                    setIsConfirmed(false);
+                    if (showDetails) {
+                      setPendingPattern(e.target.value);
+                      setShowConfirmChange(true);
+                    } else {
+                      form.setGradingPattern(e.target.value);
+                      setShowDetails(false);
+                      setIsConfirmed(false);
+                    }
                   }}
                   className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
                 />
@@ -404,21 +433,30 @@ export default function Category4Page() {
                   value="2"
                   checked={form.gradingPattern === "2"}
                   onChange={(e) => {
-                    form.setGradingPattern(e.target.value);
-                    setShowDetails(false);
-                    setIsConfirmed(false);
+                    if (showDetails) {
+                      setPendingPattern(e.target.value);
+                      setShowConfirmChange(true);
+                    } else {
+                      form.setGradingPattern(e.target.value);
+                      setShowDetails(false);
+                      setIsConfirmed(false);
+                    }
                   }}
                   className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
                 />
                 รูปแบบที่ 2
               </label>
-              <button
-                className="ml-[10px] bg-[#1b3860] text-white px-[14px] py-[6px] rounded-[6px] text-[13px] font-bold hover:bg-[#142946] transition-colors shadow-sm"
-                onClick={() => setShowDetails(true)}
-              >
-                ตกลง
-              </button>
             </div>
+            {form.gradingPattern && !showDetails && (
+              <div className="flex justify-end mt-[12px]">
+                <button
+                  className="bg-[#1b3860] text-white px-[14px] py-[6px] rounded-[6px] text-[13px] font-bold hover:bg-[#142946] transition-colors shadow-sm"
+                  onClick={() => setShowDetails(true)}
+                >
+                  ตกลง
+                </button>
+              </div>
+            )}
           </div>
 
           {form.gradingPattern && (
@@ -493,9 +531,9 @@ export default function Category4Page() {
                           <span className="font-bold text-[#1b3860] text-[14px]">C+</span>
                           <span className="text-gray-700 font-medium">65</span>
                         </div>
-                        <div className="flex justify-between items-center bg-red-50 px-[12px] py-[8px] rounded-[6px] border border-red-200 shadow-sm">
-                          <span className="font-bold text-red-600 text-[14px]">F</span>
-                          <span className="text-red-600 font-medium">&lt;39</span>
+                        <div className="flex justify-between items-center bg-white px-[12px] py-[8px] rounded-[6px] border border-gray-200 shadow-sm">
+                          <span className="font-bold text-black text-[14px]">F</span>
+                          <span className="text-yellow-600 font-medium">&lt;39</span>
                         </div>
                       </>
                     ) : (
@@ -528,9 +566,9 @@ export default function Category4Page() {
                           <span className="font-bold text-[#1b3860] text-[14px]">C+</span>
                           <span className="text-gray-700 font-medium">65</span>
                         </div>
-                        <div className="flex justify-between items-center bg-red-50 px-[12px] py-[8px] rounded-[6px] border border-red-200 shadow-sm">
-                          <span className="font-bold text-red-600 text-[14px]">F</span>
-                          <span className="text-red-600 font-medium">&lt;49</span>
+                        <div className="flex justify-between items-center bg-white px-[12px] py-[8px] rounded-[6px] border border-gray-200 shadow-sm">
+                          <span className="font-bold text-black text-[14px]">F</span>
+                          <span className="text-yellow-600 font-medium">&lt;49</span>
                         </div>
                       </>
                     )}
@@ -551,6 +589,7 @@ export default function Category4Page() {
                     onChange={(cfg) =>
                       form.setEvaluationData({ ...form.evaluationData, quiz: cfg })
                     }
+                    showErrors={showErrors}
                   />
                   <ConfigurableEvaluationItem
                     title="4) การบ้าน"
@@ -559,6 +598,7 @@ export default function Category4Page() {
                     onChange={(cfg) =>
                       form.setEvaluationData({ ...form.evaluationData, homework: cfg })
                     }
+                    showErrors={showErrors}
                   />
                   <ConfigurableEvaluationItem
                     title="5) กิจกรรมในชั้นเรียน"
@@ -567,6 +607,7 @@ export default function Category4Page() {
                     onChange={(cfg) =>
                       form.setEvaluationData({ ...form.evaluationData, activity: cfg })
                     }
+                    showErrors={showErrors}
                   />
                   
                   {isEvalValid() && !isConfirmed && (
@@ -581,7 +622,7 @@ export default function Category4Page() {
                   )}
 
                   {isConfirmed && (
-                    <EvaluationSummaryTable form={form} />
+                    <EvaluationSummaryTable form={form} showErrors={showErrors} />
                   )}
                 </div>
               )}
@@ -609,6 +650,48 @@ export default function Category4Page() {
               >
                 ตกลง
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showConfirmChange && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-[12px] shadow-xl w-full max-w-sm overflow-hidden border border-gray-100">
+            <div className="bg-yellow-500 px-6 py-4 flex items-center justify-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-[22px] w-[22px] text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <h3 className="text-[16px] font-bold text-white m-0 tracking-wide">แจ้งเตือน</h3>
+            </div>
+            <div className="p-[24px] text-center">
+              <p className="text-[14px] text-gray-700 font-medium mb-[24px] leading-relaxed">
+                ข้อมูลที่กรอกไว้จะหายทั้งหมด ต้องการเปลี่ยนรูปแบบการประเมินผลหรือไม่?
+              </p>
+              <div className="flex gap-[12px]">
+                <button
+                  onClick={() => {
+                    setShowConfirmChange(false);
+                    setPendingPattern("");
+                  }}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-[10px] px-[16px] rounded-[6px] transition-colors"
+                >
+                  ยกเลิก
+                </button>
+                <button
+                  onClick={() => {
+                    form.setGradingPattern(pendingPattern);
+                    setShowDetails(false);
+                    setIsConfirmed(false);
+                    setShowErrors(false);
+                    setShowConfirmChange(false);
+                    setPendingPattern("");
+                  }}
+                  className="flex-1 bg-[#1b3860] hover:bg-[#142946] text-white font-bold py-[10px] px-[16px] rounded-[6px] transition-colors shadow-sm"
+                >
+                  ยืนยัน
+                </button>
+              </div>
             </div>
           </div>
         </div>

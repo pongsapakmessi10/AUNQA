@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-export const IS_DEV_MODE = false; 
+export const IS_DEV_MODE = true; 
 
 
 export interface CloItem {
@@ -60,8 +60,11 @@ export interface EvaluationData {
 
 interface FormContextType {
   courseId: string;
-  credit: string;
-  term: string;
+  creditLecture: string;
+  creditLab: string;
+  creditSelfStudy: string;
+  termSemester: string;
+  termYear: string;
   courseTypes: Record<string, boolean>;
   group: string;
   studyDay: string;
@@ -84,8 +87,11 @@ interface FormContextType {
   
   // Update state functions
   setCourseId: (v: string) => void;
-  setCredit: (v: string) => void;
-  setTerm: (v: string) => void;
+  setCreditLecture: (v: string) => void;
+  setCreditLab: (v: string) => void;
+  setCreditSelfStudy: (v: string) => void;
+  setTermSemester: (v: string) => void;
+  setTermYear: (v: string) => void;
   setCourseTypes: (v: Record<string, boolean>) => void;
   setGroup: (v: string) => void;
   setStudyDay: (v: string) => void;
@@ -112,8 +118,11 @@ interface FormContextType {
 
 const defaultContext: FormContextType = {
   courseId: "",
-  credit: "",
-  term: "",
+  creditLecture: "",
+  creditLab: "",
+  creditSelfStudy: "",
+  termSemester: "",
+  termYear: "",
   courseTypes: {
     "1": false,
     "2.1": false,
@@ -167,8 +176,11 @@ const defaultContext: FormContextType = {
   summaryRowOrder: [],
 
   setCourseId: () => {},
-  setCredit: () => {},
-  setTerm: () => {},
+  setCreditLecture: () => {},
+  setCreditLab: () => {},
+  setCreditSelfStudy: () => {},
+  setTermSemester: () => {},
+  setTermYear: () => {},
   setCourseTypes: () => {},
   setGroup: () => {},
   setStudyDay: () => {},
@@ -194,8 +206,11 @@ const FormContext = createContext<FormContextType>(defaultContext);
 
 export function FormProvider({ children }: { children: ReactNode }) {
   const [courseId, setCourseId] = useState("");
-  const [credit, setCredit] = useState("");
-  const [term, setTerm] = useState("");
+  const [creditLecture, setCreditLecture] = useState("");
+  const [creditLab, setCreditLab] = useState("");
+  const [creditSelfStudy, setCreditSelfStudy] = useState("");
+  const [termSemester, setTermSemester] = useState("");
+  const [termYear, setTermYear] = useState("");
   const [courseTypes, setCourseTypes] = useState<Record<string, boolean>>({
     "1": false,
     "2.1": false,
@@ -236,8 +251,11 @@ export function FormProvider({ children }: { children: ReactNode }) {
 
     return (
       courseId.trim() !== "" &&
-      credit.trim() !== "" &&
-      term.trim() !== "" &&
+      creditLecture.trim() !== "" &&
+      creditLab.trim() !== "" &&
+      creditSelfStudy.trim() !== "" &&
+      termSemester.trim() !== "" &&
+      termYear.trim() !== "" &&
       group.trim() !== "" &&
       studyDay.trim() !== "" &&
       isTimeValid &&
@@ -257,8 +275,11 @@ export function FormProvider({ children }: { children: ReactNode }) {
     <FormContext.Provider
       value={{
         courseId,
-        credit,
-        term,
+        creditLecture,
+        creditLab,
+        creditSelfStudy,
+        termSemester,
+        termYear,
         courseTypes,
         group,
         studyDay,
@@ -278,8 +299,11 @@ export function FormProvider({ children }: { children: ReactNode }) {
         evaluationSummaries,
         summaryRowOrder,
         setCourseId,
-        setCredit,
-        setTerm,
+        setCreditLecture,
+        setCreditLab,
+        setCreditSelfStudy,
+        setTermSemester,
+        setTermYear,
         setCourseTypes,
         setGroup,
         setStudyDay,

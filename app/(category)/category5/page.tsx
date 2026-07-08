@@ -66,12 +66,18 @@ export default function Category5Page() {
             <label className="text-[14px] font-bold text-[#1b3860]">
               1. กลยุทธ์การประเมินประสิทธิผลของรายวิชาโดยนักศึกษา
             </label>
-            <textarea
-              rows={3}
-              className={inputClassName}
-              placeholder="อธิบายกลยุทธ์การประเมินประสิทธิผลของรายวิชาโดยนักศึกษา..."
-              defaultValue="มีระบบออนไลน์ในการประเมินผลการจัดการเรียนการสอนโดยนักศึกษา โดยแยกเป็นการประเมินผู้สอนและการประเมินภาพรวมของรายวิชา"
-            />
+            <div className="flex flex-col border border-blue-300 bg-blue-50/50 rounded-[8px] p-[12px] hover:border-blue-400 focus-within:border-gray-400 focus-within:bg-white transition-colors">
+              <span className="text-[11px] text-yellow-600 mb-[6px] font-medium flex items-center gap-1">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
+                สามารถคลิกเพื่อแก้ไขข้อความได้
+              </span>
+              <textarea
+                rows={3}
+                className="w-full text-[14px] text-gray-700 bg-transparent border-none outline-none resize-y"
+                placeholder="อธิบายกลยุทธ์การประเมินประสิทธิผลของรายวิชาโดยนักศึกษา..."
+                defaultValue="มีระบบออนไลน์ในการประเมินผลการจัดการเรียนการสอนโดยนักศึกษา โดยแยกเป็นการประเมินผู้สอนและการประเมินภาพรวมของรายวิชา"
+              />
+            </div>
           </div>
 
           {/* Field 2 */}
@@ -79,12 +85,18 @@ export default function Category5Page() {
             <label className="text-[14px] font-bold text-[#1b3860]">
               2. กลยุทธ์การประเมินการสอน
             </label>
-            <textarea
-              rows={3}
-              className={inputClassName}
-              placeholder="อธิบายกลยุทธ์การประเมินการสอน..."
-              defaultValue="เปิดโอกาสให้นักศึกษาประเมินผลการสอนของอาจารย์ในทุกด้าน ทั้งในด้านทักษะ ความรู้ กลยุทธ์การสอน และการใช้สื่อการสอน"
-            />
+            <div className="flex flex-col border border-blue-300 bg-blue-50/50 rounded-[8px] p-[12px] hover:border-blue-400 focus-within:border-gray-400 focus-within:bg-white transition-colors">
+              <span className="text-[11px] text-yellow-600 mb-[6px] font-medium flex items-center gap-1">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
+                สามารถคลิกเพื่อแก้ไขข้อความได้
+              </span>
+              <textarea
+                rows={3}
+                className="w-full text-[14px] text-gray-700 bg-transparent border-none outline-none resize-y"
+                placeholder="อธิบายกลยุทธ์การประเมินการสอน..."
+                defaultValue="เปิดโอกาสให้นักศึกษาประเมินผลการสอนของอาจารย์ในทุกด้าน ทั้งในด้านทักษะ ความรู้ กลยุทธ์การสอน และการใช้สื่อการสอน"
+              />
+            </div>
           </div>
 
           {/* Field 3 (Dynamic List) */}
@@ -92,12 +104,18 @@ export default function Category5Page() {
             <label className="text-[14px] font-bold text-[#1b3860]">
               3. การปรับปรุงการสอน
             </label>
-            <textarea
-              rows={2}
-              className={inputClassName}
-              placeholder="อธิบายกลไกและการปรับปรุงการเรียนการสอน..."
-              defaultValue="มีกลไกและการปรับปรุงการเรียนการสอน ดังนี้ ประชุม และ/หรือ สัมมนาอาจารย์ผู้สอนเพื่อพิจารณาปรับปรุงการจัดการเรียนการสอนสำหรับปีการศึกษาต่อไปโดยอาศัยข้อมูลดังต่อไปนี้"
-            />
+            <div className="flex flex-col border border-blue-300 bg-blue-50/50 rounded-[8px] p-[12px] hover:border-blue-400 focus-within:border-gray-400 focus-within:bg-white transition-colors">
+              <span className="text-[11px] text-yellow-600 mb-[6px] font-medium flex items-center gap-1">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
+                สามารถคลิกเพื่อแก้ไขข้อความได้
+              </span>
+              <textarea
+                rows={2}
+                className="w-full text-[14px] text-gray-700 bg-transparent border-none outline-none resize-y"
+                placeholder="อธิบายกลไกและการปรับปรุงการเรียนการสอน..."
+                defaultValue="มีกลไกและการปรับปรุงการเรียนการสอน ดังนี้ ประชุม และ/หรือ สัมมนาอาจารย์ผู้สอนเพื่อพิจารณาปรับปรุงการจัดการเรียนการสอนสำหรับปีการศึกษาต่อไปโดยอาศัยข้อมูลดังต่อไปนี้"
+              />
+            </div>
 
             <ul className="flex flex-col gap-2 mt-2 list-none p-0 m-0">
               {improvements.map((item, index) => (
@@ -141,12 +159,18 @@ export default function Category5Page() {
             <label className="text-[14px] font-bold text-[#1b3860]">
               4. การทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษาในรายวิชา
             </label>
-            <textarea
-              rows={3}
-              className={inputClassName}
-              placeholder="อธิบายกระบวนการทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษา..."
-              defaultValue="มีคณะกรรมการในการพิจารณาข้อสอบ เกณฑ์การตัดเกรดของรายวิชา รวมทั้งการประกาศคะแนนให้นักศึกษาทราบ เพื่อทวนสอบมาตรฐานผลสัมฤทธิ์ของผู้เรียน และเพื่อให้ตรงตามมาตรฐานผลการเรียนรู้ที่คาดหวังของรายวิชา"
-            />
+            <div className="flex flex-col border border-blue-300 bg-blue-50/50 rounded-[8px] p-[12px] hover:border-blue-400 focus-within:border-gray-400 focus-within:bg-white transition-colors">
+              <span className="text-[11px] text-yellow-600 mb-[6px] font-medium flex items-center gap-1">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
+                สามารถคลิกเพื่อแก้ไขข้อความได้
+              </span>
+              <textarea
+                rows={3}
+                className="w-full text-[14px] text-gray-700 bg-transparent border-none outline-none resize-y"
+                placeholder="อธิบายกระบวนการทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษา..."
+                defaultValue="มีคณะกรรมการในการพิจารณาข้อสอบ เกณฑ์การตัดเกรดของรายวิชา รวมทั้งการประกาศคะแนนให้นักศึกษาทราบ เพื่อทวนสอบมาตรฐานผลสัมฤทธิ์ของผู้เรียน และเพื่อให้ตรงตามมาตรฐานผลการเรียนรู้ที่คาดหวังของรายวิชา"
+              />
+            </div>
           </div>
 
           {/* Field 5 */}
@@ -154,12 +178,18 @@ export default function Category5Page() {
             <label className="text-[14px] font-bold text-[#1b3860]">
               5. การดำเนินการทบทวนและการวางแผนปรับปรุงประสิทธิผลของรายวิชา
             </label>
-            <textarea
-              rows={3}
-              className={inputClassName}
-              placeholder="อธิบายกระบวนการทบทวนและวางแผนปรับปรุงรายวิชา..."
-              defaultValue="เมื่อสิ้นสุดปีการศึกษา อาจารย์ผู้รับผิดชอบรายวิชารวบรวมข้อมูลจากการประเมินผลการการสอนของอาจารย์ และการประเมินรายวิชา เพื่อนำเสนอต่อคณะกรรมการบริหารหลักสูตรฯ ในการพิจารณาประเด็นที่ควรปรับปรุงของรายวิชา"
-            />
+            <div className="flex flex-col border border-blue-300 bg-blue-50/50 rounded-[8px] p-[12px] hover:border-blue-400 focus-within:border-gray-400 focus-within:bg-white transition-colors">
+              <span className="text-[11px] text-yellow-600 mb-[6px] font-medium flex items-center gap-1">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
+                สามารถคลิกเพื่อแก้ไขข้อความได้
+              </span>
+              <textarea
+                rows={3}
+                className="w-full text-[14px] text-gray-700 bg-transparent border-none outline-none resize-y"
+                placeholder="อธิบายกระบวนการทบทวนและวางแผนปรับปรุงรายวิชา..."
+                defaultValue="เมื่อสิ้นสุดปีการศึกษา อาจารย์ผู้รับผิดชอบรายวิชารวบรวมข้อมูลจากการประเมินผลการการสอนของอาจารย์ และการประเมินรายวิชา เพื่อนำเสนอต่อคณะกรรมการบริหารหลักสูตรฯ ในการพิจารณาประเด็นที่ควรปรับปรุงของรายวิชา"
+              />
+            </div>
           </div>
         </div>
       </div>
