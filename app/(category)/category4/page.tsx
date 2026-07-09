@@ -235,7 +235,7 @@ function ConfigurableEvaluationItem({
           <button
             type="button"
             onClick={() => onChange({ count: "", items: [] })}
-            className="ml-[4px] text-[12px] text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-[8px] py-[4px] rounded-[4px] transition-colors border border-red-100"
+            className="ml-[4px] text-[12px] text-[#d5ae52] hover:text-red-700 bg-white hover:bg-yellow-200 cursor-pointer px-[8px] py-[4px] rounded-[4px] transition-colors border border-red-100"
           >
             รีเซ็ต
           </button>
@@ -301,7 +301,7 @@ function ConfigurableEvaluationItem({
             </table>
           </div>
           {!isValid && (
-            <p className="text-yellow-600 text-[12px] mt-[8px] font-medium flex items-center gap-[4px]">
+            <p className="text-yellow-600 text-[12px] mt-[8px] font-medium flex items-center justify-end gap-[4px]">
               สัดส่วนรวมต้องเท่ากับ {targetPercent}% (ปัจจุบันรวม {currentTotal}%)
             </p>
           )}

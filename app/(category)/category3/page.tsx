@@ -465,7 +465,7 @@ export default function Category3Page() {
 
         {/* หมายเหตุใต้ตาราง */}
         <div className="w-full mb-[24px]">
-          <div className="flex flex-col border border-blue-300 bg-blue-50/50 rounded-[8px] p-[12px] hover:border-blue-400 focus-within:border-gray-400 focus-within:bg-white transition-colors">
+          <div className="flex flex-col border border-gray-200 bg-gray-50 rounded-[8px] p-[12px] hover:border-gray-300 focus-within:border-gray-400 focus-within:bg-white transition-colors">
             <span className="text-[11px] text-yellow-600 mb-[6px] font-medium flex items-center gap-1">
               <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
               สามารถคลิกเพื่อแก้ไขข้อความได้
