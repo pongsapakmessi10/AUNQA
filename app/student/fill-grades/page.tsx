@@ -68,8 +68,6 @@ export default function FillGradesPage() {
                     <option value="D+">D+</option>
                     <option value="D">D</option>
                     <option value="F">F</option>
-                    <option value="S">S</option>
-                    <option value="U">U</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,8 +115,6 @@ export default function FillGradesPage() {
                         <option value="D+">D+</option>
                         <option value="D">D</option>
                         <option value="F">F</option>
-                        <option value="S">S</option>
-                        <option value="U">U</option>
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
