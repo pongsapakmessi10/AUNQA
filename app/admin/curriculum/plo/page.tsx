@@ -28,11 +28,11 @@ export default function PLOPage() {
   const handleSaveCategory = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCatId.trim() || !newCatName.trim()) return;
-    
+
     if (isEditMode && editingCategoryId) {
-      setCategories(categories.map(cat => 
-        cat.id === editingCategoryId 
-          ? { ...cat, shortId: newCatId.trim().toUpperCase(), name: newCatName.trim(), desc: newCatDesc.trim() } 
+      setCategories(categories.map(cat =>
+        cat.id === editingCategoryId
+          ? { ...cat, shortId: newCatId.trim().toUpperCase(), name: newCatName.trim(), desc: newCatDesc.trim() }
           : cat
       ));
     } else {
@@ -47,14 +47,6 @@ export default function PLOPage() {
     closeCategoryModal();
   };
 
-  const openAddModal = () => {
-    setIsEditMode(false);
-    setEditingCategoryId(null);
-    setNewCatId("");
-    setNewCatName("");
-    setNewCatDesc("");
-    setIsCategoryModalOpen(true);
-  };
 
   const openEditModal = (cat: any) => {
     setIsEditMode(true);
@@ -100,74 +92,52 @@ export default function PLOPage() {
             <p className="text-gray-500 text-sm mt-1">บริหารจัดการข้อมูลผลการเรียนรู้ระดับหลักสูตร</p>
           </div>
         </div>
-        
-        <button 
-          onClick={openAddModal}
-          className="bg-[#1b3860] hover:bg-[#142946] text-white px-4 py-2.5 rounded-lg flex items-center space-x-2 transition-colors shadow-sm font-medium text-sm"
-        >
-          <Plus className="w-4 h-4" />
-          <span>เพิ่มหมวดหมู่ใหม่</span>
-        </button>
       </div>
 
       {/* Categories Grid View (Uniform / Corporate Design) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {categories.map((cat) => (
-          <div 
-            key={cat.id} 
-            className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden group"
+          <div
+            key={cat.id}
+            className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group"
           >
             {/* Card Header */}
-            <div className="p-5 bg-[#1b3860] flex justify-between items-start rounded-t-xl">
-              <div className="flex-1 mr-3">
-                <div className="flex items-center space-x-2 mb-2">
-                  <span className="inline-block px-2.5 py-1 bg-white text-[#1b3860] text-xs font-extrabold rounded-md shadow-sm">
+            <div className="p-6 bg-gradient-to-r from-[#1b3860] to-[#142946] flex justify-between items-start relative overflow-hidden">
+              {/* Decorative Background Element */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 pointer-events-none"></div>
+
+              <div className="flex-1 mr-3 relative z-10">
+                <div className="flex items-center space-x-2 mb-3">
+                  <span className="inline-flex items-center justify-center w-8 h-8 bg-white text-[#1b3860] text-sm font-extrabold rounded-md shadow-sm">
                     {cat.shortId}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-white line-clamp-1 drop-shadow-sm" title={cat.name}>
+                <h3 className="text-xl font-bold text-white tracking-wide drop-shadow-sm" title={cat.name}>
                   {cat.name}
                 </h3>
               </div>
-              <span className="px-2.5 py-1 bg-white/20 text-white text-xs font-bold rounded-full whitespace-nowrap border border-white/30">
-                {cat.count} รายการ
-              </span>
+              <div className="relative z-10 flex flex-col items-end">
+                <span className="px-3 py-1 bg-[#1b3860]/50 text-white text-xs font-bold rounded-full whitespace-nowrap border border-white/20 shadow-inner">
+                  {cat.count} รายการ
+                </span>
+              </div>
             </div>
 
             {/* Card Body */}
-            <div className="p-5 flex-1 flex flex-col">
-              <p className="text-sm font-medium text-gray-700 mb-1">รายละเอียดหมวดหมู่:</p>
-              <p className="text-sm text-gray-500 line-clamp-2">{cat.desc || "ไม่มีข้อมูลคำอธิบายเพิ่มเติม"}</p>
+            <div className="p-6 flex-1 flex flex-col border-t-4 border-[#d5ae52]">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">รายละเอียดหมวดหมู่</p>
+              <p className="text-sm text-gray-700 leading-relaxed line-clamp-2 font-medium">{cat.desc || "ไม่มีข้อมูลคำอธิบายเพิ่มเติม"}</p>
             </div>
 
             {/* Card Footer */}
-            <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-              <Link 
+            <div className="px-6 py-4 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between">
+              <Link
                 href={`/admin/curriculum/plo/${cat.id}`}
-                className="group flex items-center space-x-1 text-sm font-bold text-[#1b3860] hover:text-[#d5ae52] transition-colors"
+                className="group/link flex items-center space-x-1.5 text-sm font-bold text-[#1b3860] hover:text-[#d5ae52] transition-colors"
               >
                 <span>จัดการข้อมูล SPLO</span>
-                <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                <ChevronRight className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" />
               </Link>
-              <div className="flex items-center space-x-1">
-                <button 
-                  onClick={() => openEditModal(cat)}
-                  className="p-1.5 text-gray-400 hover:text-[#1b3860] hover:bg-gray-200 rounded transition-colors"
-                  title="แก้ไขหมวดหมู่"
-                >
-                  <Pencil className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={() => {
-                    setDeletingCategoryId(cat.id);
-                    setIsDeleteModalOpen(true);
-                  }}
-                  className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors"
-                  title="ลบหมวดหมู่"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
             </div>
           </div>
         ))}
@@ -181,14 +151,14 @@ export default function PLOPage() {
               <h2 className="text-xl font-bold text-[#1b3860]">
                 {isEditMode ? "แก้ไขหมวดหมู่" : "เพิ่มหมวดหมู่ใหม่"}
               </h2>
-              <button 
+              <button
                 onClick={closeCategoryModal}
                 className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            
+
             <form onSubmit={handleSaveCategory} className="p-5 space-y-4">
               <div>
                 <label htmlFor="catId" className="block text-sm font-bold text-gray-700 mb-1.5">
@@ -233,7 +203,7 @@ export default function PLOPage() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1b3860] focus:border-[#1b3860] outline-none transition-all text-sm resize-none"
                 ></textarea>
               </div>
-              
+
               <div className="pt-4 flex justify-end space-x-3">
                 <button
                   type="button"
@@ -266,7 +236,7 @@ export default function PLOPage() {
               <p className="text-sm text-gray-500 leading-relaxed">
                 การลบหมวดหมู่นี้จะทำให้ข้อมูล SPLO ทั้งหมดที่อยู่ภายใต้หมวดหมู่นี้ถูกลบไปด้วย คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ?
               </p>
-              
+
               <div className="pt-6 flex justify-center space-x-3">
                 <button
                   onClick={() => setIsDeleteModalOpen(false)}
