@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-export const IS_DEV_MODE = true; 
+export const IS_DEV_MODE = true;
 
 
 export interface CloItem {
@@ -77,14 +77,15 @@ interface FormContextType {
   descEn: string;
   updateDate: string;
   gradingPattern: string;
-  
+  studyPlans: string[];
+
   clos: CloItem[];
   plos: PloItem[];
   activities: ActivityItem[];
   evaluationData: EvaluationData;
   evaluationSummaries: Record<string, EvaluationSummaryItem>;
   summaryRowOrder: string[];
-  
+
   // Update state functions
   setCourseId: (v: string) => void;
   setCreditLecture: (v: string) => void;
@@ -104,14 +105,15 @@ interface FormContextType {
   setDescEn: (v: string) => void;
   setUpdateDate: (v: string) => void;
   setGradingPattern: (v: string) => void;
-  
+  setStudyPlans: (v: string[]) => void;
+
   setClos: (v: CloItem[]) => void;
   setPlos: (v: PloItem[]) => void;
   setActivities: (v: ActivityItem[]) => void;
   setEvaluationData: (v: EvaluationData) => void;
   setEvaluationSummaries: (v: Record<string, EvaluationSummaryItem>) => void;
   setSummaryRowOrder: (v: string[]) => void;
-  
+
   // Validation
   isCategory1Valid: () => boolean;
 }
@@ -150,7 +152,8 @@ const defaultContext: FormContextType = {
   descEn: "",
   updateDate: "",
   gradingPattern: "1",
-  
+  studyPlans: [""],
+
   clos: [
     { id: "1", clo: "1", outcome: "อธิบายหลักการและแนวคิดการประเมินวัฏจักรชีวิตของผลิตภัณฑ์ (LCA)", level: "R" },
     { id: "2", clo: "2", outcome: "ใช้ข้อมูลจากปริมาณการปล่อยคาร์บอน เพื่อตัดสินใจเลือกผลิตภัณฑ์ที่มีผลกระทบสิ่งแวดล้อมน้อยกว่า", level: "R, U" },
@@ -175,30 +178,31 @@ const defaultContext: FormContextType = {
   evaluationSummaries: {},
   summaryRowOrder: [],
 
-  setCourseId: () => {},
-  setCreditLecture: () => {},
-  setCreditLab: () => {},
-  setCreditSelfStudy: () => {},
-  setTermSemester: () => {},
-  setTermYear: () => {},
-  setCourseTypes: () => {},
-  setGroup: () => {},
-  setStudyDay: () => {},
-  setStudyTime: () => {},
-  setStudyLocation: () => {},
-  setResponsiblePerson: () => {},
-  setInstructorsList: () => {},
-  setConsultHours: () => {},
-  setDescTh: () => {},
-  setDescEn: () => {},
-  setUpdateDate: () => {},
-  setGradingPattern: () => {},
-  setClos: () => {},
-  setPlos: () => {},
-  setActivities: () => {},
-  setEvaluationData: () => {},
-  setEvaluationSummaries: () => {},
-  setSummaryRowOrder: () => {},
+  setCourseId: () => { },
+  setCreditLecture: () => { },
+  setCreditLab: () => { },
+  setCreditSelfStudy: () => { },
+  setTermSemester: () => { },
+  setTermYear: () => { },
+  setCourseTypes: () => { },
+  setGroup: () => { },
+  setStudyDay: () => { },
+  setStudyTime: () => { },
+  setStudyLocation: () => { },
+  setResponsiblePerson: () => { },
+  setInstructorsList: () => { },
+  setConsultHours: () => { },
+  setDescTh: () => { },
+  setDescEn: () => { },
+  setUpdateDate: () => { },
+  setGradingPattern: () => { },
+  setStudyPlans: () => { },
+  setClos: () => { },
+  setPlos: () => { },
+  setActivities: () => { },
+  setEvaluationData: () => { },
+  setEvaluationSummaries: () => { },
+  setSummaryRowOrder: () => { },
   isCategory1Valid: () => false,
 };
 
@@ -230,6 +234,7 @@ export function FormProvider({ children }: { children: ReactNode }) {
   const [descEn, setDescEn] = useState("");
   const [updateDate, setUpdateDate] = useState("");
   const [gradingPattern, setGradingPattern] = useState("");
+  const [studyPlans, setStudyPlans] = useState<string[]>(defaultContext.studyPlans);
 
   const [clos, setClos] = useState<CloItem[]>(defaultContext.clos);
   const [plos, setPlos] = useState<PloItem[]>(defaultContext.plos);
@@ -242,10 +247,10 @@ export function FormProvider({ children }: { children: ReactNode }) {
     const [start, end] = studyTime.split(" - ");
     const isTimeValid = !!(start?.trim() && end?.trim());
 
-    const areInstructorsValid = instructorsList.every(i => 
-      i.title.trim() !== "" && 
-      i.firstName.trim() !== "" && 
-      i.lastName.trim() !== "" && 
+    const areInstructorsValid = instructorsList.every(i =>
+      i.title.trim() !== "" &&
+      i.firstName.trim() !== "" &&
+      i.lastName.trim() !== "" &&
       i.contact.trim() !== ""
     );
 
@@ -292,6 +297,7 @@ export function FormProvider({ children }: { children: ReactNode }) {
         descEn,
         updateDate,
         gradingPattern,
+        studyPlans,
         clos,
         plos,
         activities,
@@ -316,6 +322,7 @@ export function FormProvider({ children }: { children: ReactNode }) {
         setDescEn,
         setUpdateDate,
         setGradingPattern,
+        setStudyPlans,
         setClos,
         setPlos,
         setActivities,
