@@ -40,7 +40,7 @@ export default function Category1Page() {
         { id: "descTh", value: form.descTh },
         { id: "descEn", value: form.descEn },
       ];
-      
+
       const firstEmpty = requiredFields.find(f => f.value.trim() === "");
       if (firstEmpty) {
         const el = document.getElementById(firstEmpty.id);
@@ -59,11 +59,10 @@ export default function Category1Page() {
   const getInputClass = (value: string, isRequired: boolean = true, customPadding: string = "px-[11px] py-[9px]") => {
     const isError = isRequired && showErrors && value.trim() === "";
     const baseClass = `font-inherit text-[14px] border rounded-[8px] ${customPadding} bg-gray-50 text-gray-700 resize-y focus:outline-none print:border-transparent print:shadow-none print:bg-transparent transition-colors duration-200`;
-    return `${baseClass} ${
-      isError
+    return `${baseClass} ${isError
         ? "border-yellow-500 focus:border-yellow-500 focus:ring focus:ring-yellow-500/20 bg-yellow-50"
         : "border-gray-200 focus:border-[#d5ae52] focus:ring focus:ring-[#d5ae52]/20 focus:bg-white"
-    }`;
+      }`;
   };
 
   return (
@@ -181,7 +180,7 @@ export default function Category1Page() {
             <label className="text-[13px] font-semibold text-[#1b3860]">
               2. ผู้รับผิดชอบรายวิชา / อาจารย์ผู้สอน พร้อมข้อมูลการติดต่อ <span className="text-red-500">*</span>
             </label>
-            
+
             {/* Responsible Person */}
             <div className="bg-gray-50 border border-gray-200 rounded-[8px] p-[16px]">
               <h3 className="text-[14px] font-bold text-[#1b3860] mb-[12px]">ผู้รับผิดชอบรายวิชา <span className="text-red-500">*</span></h3>
@@ -232,7 +231,7 @@ export default function Category1Page() {
             {/* Instructors List */}
             <div className="bg-gray-50 border border-gray-200 rounded-[8px] p-[16px]">
               <h3 className="text-[14px] font-bold text-[#1b3860] mb-[16px]">อาจารย์ผู้สอน</h3>
-              
+
               {form.instructorsList.length === 0 ? (
                 <p className="text-[13px] text-gray-500 italic text-center py-[10px]">ไม่มีอาจารย์ผู้สอนเพิ่มเติม</p>
               ) : (
@@ -319,7 +318,7 @@ export default function Category1Page() {
                   type="button"
                   onClick={() => {
                     form.setInstructorsList([
-                      ...form.instructorsList, 
+                      ...form.instructorsList,
                       { id: Date.now().toString(), title: "", firstName: "", lastName: "", contact: "" }
                     ]);
                   }}
