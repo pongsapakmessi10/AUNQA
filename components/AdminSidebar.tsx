@@ -103,7 +103,7 @@ export default function AdminSidebar() {
                   {item.subItems && isParentExpanded && (
                     <div className="mt-1 ml-4 pl-4 border-l border-white/10 space-y-1 animate-in slide-in-from-top-2 duration-200">
                       {item.subItems.map(sub => {
-                         const isSubActive = pathname === sub.href;
+                         const isSubActive = pathname === sub.href || pathname.startsWith(`${sub.href}/`);
                          return (
                            <Link
                              key={sub.name}
