@@ -12,10 +12,42 @@ export default function CurriculumPage() {
       facultyTh: "คณะวิทยาศาสตร์และเทคโนโลยี",
       facultyEn: "Faculty of Science and Technology",
       tracks: [
-        { id: 1, nameTh: "สหกิจศึกษาและการศึกษาเชิงบูรณาการกับการทำงาน", nameEn: "Cooperative and Work Integrated Education" },
-        { id: 2, nameTh: "แผนวิจัย หรือ แผนโครงงานวิจัย", nameEn: "Research" }
+        { id: 1, nameTh: "สหกิจศึกษาและการศึกษาเชิงบูรณาการกับการทำงาน", nameEn: "Cooperative and Work Integrated Education", shortName: "CWIE" },
+        { id: 2, nameTh: "แผนวิจัย หรือ แผนโครงงานวิจัย", nameEn: "Research", shortName: "RES" }
       ]
     },
+    {
+      id: 2,
+      nameTh: "สาขาวิชาวิทยาการคอมพิวเตอร์ (หลักสูตรปรับปรุง พ.ศ. 2565)",
+      nameEn: "Bachelor of Science in Computer Science",
+      facultyTh: "คณะวิทยาศาสตร์และเทคโนโลยี",
+      facultyEn: "Faculty of Science and Technology",
+      tracks: [
+        { id: 1, nameTh: "วิศวกรรมซอฟต์แวร์", nameEn: "Software Engineering", shortName: "SE" },
+        { id: 2, nameTh: "วิทยาการข้อมูล", nameEn: "Data Science", shortName: "DS" }
+      ]
+    },
+    {
+      id: 3,
+      nameTh: "สาขาวิชาวิศวกรรมเครื่องกล (หลักสูตรปรับปรุง พ.ศ. 2564)",
+      nameEn: "Bachelor of Engineering in Mechanical Engineering",
+      facultyTh: "คณะวิศวกรรมศาสตร์",
+      facultyEn: "Faculty of Engineering",
+      tracks: [
+        { id: 1, nameTh: "ยานยนต์อัจฉริยะ", nameEn: "Smart Vehicles", shortName: "SV" }
+      ]
+    },
+    {
+      id: 4,
+      nameTh: "สาขาวิชาบริหารธุรกิจ (หลักสูตรปรับปรุง พ.ศ. 2566)",
+      nameEn: "Bachelor of Business Administration",
+      facultyTh: "คณะพาณิชยศาสตร์และการบัญชี",
+      facultyEn: "Thammasat Business School",
+      tracks: [
+        { id: 1, nameTh: "การจัดการ", nameEn: "Management", shortName: "MGT" },
+        { id: 2, nameTh: "การตลาด", nameEn: "Marketing", shortName: "MKT" }
+      ]
+    }
   ]);
 
   // Box State (For adding new)
@@ -26,8 +58,8 @@ export default function CurriculumPage() {
   const [newNameEn, setNewNameEn] = useState("");
   const [newFacultyTh, setNewFacultyTh] = useState("");
   const [newFacultyEn, setNewFacultyEn] = useState("");
-  const [tracks, setTracks] = useState<{ id: number, nameTh: string, nameEn: string }[]>([
-    { id: Date.now(), nameTh: "", nameEn: "" }
+  const [tracks, setTracks] = useState<{ id: number, nameTh: string, nameEn: string, shortName: string }[]>([
+    { id: Date.now(), nameTh: "", nameEn: "", shortName: "" }
   ]);
 
   // Inline Edit State
@@ -37,18 +69,19 @@ export default function CurriculumPage() {
   const [inlineNameEn, setInlineNameEn] = useState("");
   const [inlineFacultyTh, setInlineFacultyTh] = useState("");
   const [inlineFacultyEn, setInlineFacultyEn] = useState("");
-  const [inlineTracks, setInlineTracks] = useState<{ id: number, nameTh: string, nameEn: string }[]>([]);
+  const [inlineTracks, setInlineTracks] = useState<{ id: number, nameTh: string, nameEn: string, shortName: string }[]>([]);
 
   // Add Box Handlers
   const handleAddTrack = () => {
-    setTracks([...tracks, { id: Date.now(), nameTh: "", nameEn: "" }]);
+    if (tracks.length >= 6) return;
+    setTracks([...tracks, { id: Date.now(), nameTh: "", nameEn: "", shortName: "" }]);
   };
 
   const handleRemoveTrack = (id: number) => {
     setTracks(tracks.filter(t => t.id !== id));
   };
 
-  const handleTrackChange = (id: number, field: "nameTh" | "nameEn", value: string) => {
+  const handleTrackChange = (id: number, field: "nameTh" | "nameEn" | "shortName", value: string) => {
     setTracks(tracks.map(t => t.id === id ? { ...t, [field]: value } : t));
   };
 
@@ -77,7 +110,7 @@ export default function CurriculumPage() {
     setNewNameEn("");
     setNewFacultyTh("");
     setNewFacultyEn("");
-    setTracks([{ id: Date.now(), nameTh: "", nameEn: "" }]);
+    setTracks([{ id: Date.now(), nameTh: "", nameEn: "", shortName: "" }]);
   };
 
   // Inline Edit Handlers
@@ -92,7 +125,9 @@ export default function CurriculumPage() {
     setInlineFacultyEn(item.facultyEn || "");
 
     // Ensure there's at least one empty track field if it was empty
-    const initTracks = item.tracks && item.tracks.length > 0 ? [...item.tracks] : [{ id: Date.now(), nameTh: "", nameEn: "" }];
+    const initTracks = item.tracks && item.tracks.length > 0
+      ? item.tracks.map((t: any) => ({ ...t, shortName: t.shortName || "" }))
+      : [{ id: Date.now(), nameTh: "", nameEn: "", shortName: "" }];
     setInlineTracks(initTracks);
   };
 
@@ -101,14 +136,15 @@ export default function CurriculumPage() {
   };
 
   const handleInlineAddTrack = () => {
-    setInlineTracks([...inlineTracks, { id: Date.now(), nameTh: "", nameEn: "" }]);
+    if (inlineTracks.length >= 6) return;
+    setInlineTracks([...inlineTracks, { id: Date.now(), nameTh: "", nameEn: "", shortName: "" }]);
   };
 
   const handleInlineRemoveTrack = (id: number) => {
     setInlineTracks(inlineTracks.filter(t => t.id !== id));
   };
 
-  const handleInlineTrackChange = (id: number, field: "nameTh" | "nameEn", value: string) => {
+  const handleInlineTrackChange = (id: number, field: "nameTh" | "nameEn" | "shortName", value: string) => {
     setInlineTracks(inlineTracks.map(t => t.id === id ? { ...t, [field]: value } : t));
   };
 
@@ -170,10 +206,14 @@ export default function CurriculumPage() {
             if (inlineEditingId !== null) cancelInlineEdit();
             setIsAddBoxOpen(!isAddBoxOpen);
           }}
-          className="bg-[#1b3860] hover:bg-[#142946] text-white px-4 py-2.5 rounded-lg flex items-center space-x-2 transition-colors shadow-sm font-medium text-sm"
+          disabled={curriculums.length >= 4 && !isAddBoxOpen}
+          className={`px-4 py-2.5 rounded-lg flex items-center space-x-2 transition-colors shadow-sm font-medium text-sm ${curriculums.length >= 4 && !isAddBoxOpen
+              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+              : "bg-[#1b3860] hover:bg-[#142946] text-white"
+            }`}
         >
           {isAddBoxOpen ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-          <span>{isAddBoxOpen ? "ปิดหน้าต่างเพิ่ม" : "เพิ่มหลักสูตรใหม่"}</span>
+          <span>{isAddBoxOpen ? "ปิดหน้าต่างเพิ่ม" : (curriculums.length >= 4 ? "ครบ 4 หลักสูตรแล้ว" : "เพิ่มหลักสูตรใหม่")}</span>
         </button>
       </div>
 
@@ -255,16 +295,30 @@ export default function CurriculumPage() {
                 <button
                   type="button"
                   onClick={handleAddTrack}
-                  className="text-xs bg-[#d5ae52] hover:bg-[#b89542] text-white px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors font-medium shadow-sm"
+                  disabled={tracks.length >= 6}
+                  className={`text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors font-medium shadow-sm ${tracks.length >= 6
+                      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                      : "bg-[#d5ae52] hover:bg-[#b89542] text-white"
+                    }`}
                 >
-                  <Plus className="w-3.5 h-3.5" /> เพิ่มสายการเรียน
+                  <Plus className="w-3.5 h-3.5" /> {tracks.length >= 6 ? "ครบ 6 สายการเรียนแล้ว" : "เพิ่มสายการเรียน"}
                 </button>
               </div>
 
               <div className="space-y-3">
                 {tracks.map((track, index) => (
                   <div key={track.id} className="flex gap-4 items-start bg-white p-4 rounded-lg border border-gray-200 shadow-sm relative group">
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_2fr_2fr] gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-500 mb-1">ตัวย่อ (Short Name)</label>
+                        <input
+                          type="text"
+                          value={track.shortName || ""}
+                          onChange={(e) => handleTrackChange(track.id, 'shortName', e.target.value)}
+                          placeholder="เช่น CWIE"
+                          className="w-full px-3 py-2 border border-gray-200 rounded focus:ring-2 focus:ring-[#d5ae52] outline-none text-sm font-bold text-[#1b3860]"
+                        />
+                      </div>
                       <div>
                         <label className="block text-xs font-bold text-gray-500 mb-1">สายการเรียน (ภาษาไทย)</label>
                         <input
@@ -381,6 +435,12 @@ export default function CurriculumPage() {
                                 </span>
                                 <div className="flex-1 space-y-2">
                                   <input
+                                    value={t.shortName || ""}
+                                    onChange={(e) => handleInlineTrackChange(t.id, 'shortName', e.target.value)}
+                                    placeholder="ตัวย่อ (เช่น CWIE)"
+                                    className="w-full px-2 py-1.5 border border-gray-300 rounded focus:ring-1 focus:ring-[#d5ae52] outline-none text-xs font-bold text-[#1b3860]"
+                                  />
+                                  <input
                                     value={t.nameTh}
                                     onChange={(e) => handleInlineTrackChange(t.id, 'nameTh', e.target.value)}
                                     placeholder="สายการเรียน (ไทย)"
@@ -405,9 +465,11 @@ export default function CurriculumPage() {
                             <button
                               type="button"
                               onClick={handleInlineAddTrack}
-                              className="text-xs text-[#1b3860] hover:text-[#142946] font-bold flex items-center gap-1 mt-1 px-1"
+                              disabled={inlineTracks.length >= 6}
+                              className={`text-xs font-bold flex items-center gap-1 mt-1 px-1 ${inlineTracks.length >= 6 ? "text-gray-400 cursor-not-allowed" : "text-[#1b3860] hover:text-[#142946]"
+                                }`}
                             >
-                              <Plus className="w-3.5 h-3.5" /> เพิ่มสายการเรียน
+                              <Plus className="w-3.5 h-3.5" /> {inlineTracks.length >= 6 ? "ครบ 6 สายการเรียนแล้ว" : "เพิ่มสายการเรียน"}
                             </button>
                           </div>
                         </td>
@@ -455,7 +517,10 @@ export default function CurriculumPage() {
                                     {idx + 1}
                                   </span>
                                   <div>
-                                    <div className="font-bold text-sm text-[#1b3860] leading-tight">{t.nameTh || "-"}</div>
+                                    <div className="font-bold text-sm text-[#1b3860] leading-tight">
+                                      {t.shortName && <span className="bg-[#1b3860]/10 text-[#1b3860] px-1.5 py-0.5 rounded text-xs mr-2">{t.shortName}</span>}
+                                      {t.nameTh || "-"}
+                                    </div>
                                     <div className="text-xs text-gray-500 mt-0.5 leading-tight">{t.nameEn || "-"}</div>
                                   </div>
                                 </div>

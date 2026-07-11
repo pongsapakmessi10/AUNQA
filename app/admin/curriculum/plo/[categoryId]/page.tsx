@@ -39,23 +39,23 @@ export default function SPLOPage() {
       }
     ],
     Skill: [
-      { id: 3, code: "S1", detail: "PerformSciMath", subPlos: [] },
-      { id: 4, code: "S2", detail: "Select SciMath", subPlos: [] },
-      { id: 5, code: "S3", detail: "Use language", subPlos: [] },
-      { id: 6, code: "S4", detail: "AnalyzeSyn", subPlos: [] },
-      { id: 7, code: "S5", detail: "SciThink", subPlos: [] },
-      { id: 8, code: "S6", detail: "Digital", subPlos: [] }
+      { id: 3, code: "S1", detail: "PerformSciMath", subPlos: [{ id: "s2_1", code: "SPLO2.1" }] },
+      { id: 4, code: "S2", detail: "Select SciMath", subPlos: [{ id: "s2_2", code: "SPLO2.2" }] },
+      { id: 5, code: "S3", detail: "Use language", subPlos: [{ id: "s2_3", code: "SPLO2.3" }] },
+      { id: 6, code: "S4", detail: "AnalyzeSyn", subPlos: [{ id: "s2_4", code: "SPLO2.4" }] },
+      { id: 7, code: "S5", detail: "SciThink", subPlos: [{ id: "s2_5", code: "SPLO2.5" }] },
+      { id: 8, code: "S6", detail: "Digital", subPlos: [{ id: "s2_6", code: "SPLO2.6" }] }
     ],
     Ethic: [
-      { id: 9, code: "E1", detail: "Honesty", subPlos: [] },
-      { id: 10, code: "E2", detail: "Public Mind", subPlos: [] },
-      { id: 11, code: "E3", detail: "Prof.Ethics", subPlos: [] },
+      { id: 9, code: "E1", detail: "Honesty", subPlos: [{ id: "s3_1", code: "SPLO3.1" }] },
+      { id: 10, code: "E2", detail: "Public Mind", subPlos: [{ id: "s3_2", code: "SPLO3.2" }] },
+      { id: 11, code: "E3", detail: "Prof.Ethics", subPlos: [{ id: "s3_3", code: "SPLO3.3" }] },
     ],
     Characteristic: [
-      { id: 12, code: "C1", detail: "Responsibility", subPlos: [] },
-      { id: 13, code: "C2", detail: "Communication", subPlos: [] },
-      { id: 14, code: "C3", detail: "Team", subPlos: [] },
-      { id: 15, code: "C4", detail: "Logic, solve", subPlos: [] }
+      { id: 12, code: "C1", detail: "Responsibility", subPlos: [{ id: "s4_1", code: "SPLO4.1" }] },
+      { id: 13, code: "C2", detail: "Communication", subPlos: [{ id: "s4_2", code: "SPLO4.2" }] },
+      { id: 14, code: "C3", detail: "Team", subPlos: [{ id: "s4_3", code: "SPLO4.3" }] },
+      { id: 15, code: "C4", detail: "Logic, solve", subPlos: [{ id: "s4_4", code: "SPLO4.4" }] }
     ]
   });
 
