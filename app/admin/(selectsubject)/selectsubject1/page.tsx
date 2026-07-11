@@ -106,149 +106,90 @@ export default function Category1Page() {
                         />
                     </div>
 
-                    <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
-                        <label className="text-[13px] font-semibold text-[#1b3860]">
-                            ปี/ภาคการศึกษา <span className="text-red-500">*</span>
-                        </label>
-                        <div className="grid grid-cols-2 gap-[10px] mt-auto">
-                            <div className="flex flex-col justify-end gap-[5px]">
-                                <label className="text-[12px] text-gray-600">ปีที่</label>
-                                <select
-                                    id="termSemester"
-                                    className={getInputClass(form.termSemester)}
-                                    value={form.termSemester}
-                                    onChange={(e) => form.setTermSemester(e.target.value)}
-                                >
-                                    <option value="">-- เลือกปี --</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                </select>
-                            </div>
-                            <div className="flex flex-col justify-end gap-[5px]">
-                                <label className="text-[12px] text-gray-600">ภาคการศึกษา (Semester)</label>
-                                <select
-                                    id="termSemester"
-                                    className={getInputClass(form.termSemester)}
-                                    value={form.termSemester}
-                                    onChange={(e) => form.setTermSemester(e.target.value)}
-                                >
-                                    <option value="">-- เลือกภาค --</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="summer">Summer</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <div className="col-span-1 sm:col-span-2 grid grid-cols-1 lg:grid-cols-4 gap-y-[14px] gap-x-[24px]">
 
-                    <div className="flex flex-col gap-[12px] col-span-1 sm:col-span-2 bg-gray-50 border border-gray-200 rounded-[8px] py-[16px] px-[18px]">
-                        <div className="flex justify-between items-center">
+                        {/* จำนวนหน่วยกิต: ให้กินพื้นที่ 3 ส่วน (lg:col-span-3) */}
+                        <div className="flex flex-col gap-[5px] h-full lg:col-span-3">
                             <label className="text-[13px] font-semibold text-[#1b3860]">
-                                แผนการเรียน (Study Plan)
+                                จำนวนหน่วยกิต <span className="text-red-500">*</span>
                             </label>
-                            <button
-                                type="button"
-                                onClick={handleAddStudyPlan}
-                                className="flex items-center gap-[4px] bg-[#1b3860] hover:bg-[#142946] text-white text-[12px] px-[10px] py-[4px] rounded-[6px] transition-colors"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                                </svg>
-                                เพิ่มแผน
-                            </button>
-                        </div>
-
-                        <div className="flex flex-col gap-[10px]">
-                            {form.studyPlans.map((plan, index) => (
-                                <div key={index} className="flex items-center gap-[10px]">
-                                    <div className="flex-1">
-                                        <select
-                                            className={`${getInputClass(plan, false)} w-full cursor-pointer`}
-                                            value={plan}
-                                            onChange={(e) => handleStudyPlanChange(index, e.target.value)}
-                                        >
-                                            <option value="">-- เลือกแผนการเรียน --</option>
-                                            <option value="แผน ก แบบ ก1">แผน ก แบบ ก1</option>
-                                            <option value="แผน ก แบบ ก2">แผน ก แบบ ก2</option>
-                                            <option value="แผน ข">แผน ข</option>
-                                            <option value="แบบ 1.1">แบบ 1.1</option>
-                                            <option value="แบบ 1.2">แบบ 1.2</option>
-                                            <option value="แบบ 2.1">แบบ 2.1</option>
-                                            <option value="แบบ 2.2">แบบ 2.2</option>
-                                        </select>
-                                    </div>
-                                    {form.studyPlans.length > 1 && (
-                                        <button
-                                            type="button"
-                                            onClick={() => handleRemoveStudyPlan(index)}
-                                            className="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-[8px] rounded-[6px] transition-colors flex-shrink-0"
-                                            title="ลบแผนการเรียน"
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                                            </svg>
-                                        </button>
-                                    )}
+                            {/* เปลี่ยนเป็น md:grid-cols-4 เพื่อให้เรียง 4 ช่องพอดี */}
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-[10px] mt-auto">
+                                <div className="flex flex-col justify-end gap-[5px] h-full">
+                                    <label className="text-[12px] text-gray-600">
+                                        <span className="block">จำนวนหน่วยกิต</span>
+                                        <span className="block">(Credit)</span>
+                                    </label>
+                                    <input
+                                        id="creditTotal"
+                                        className={getInputClass(form.creditTotal)}
+                                        placeholder="เช่น 10"
+                                        value={form.creditTotal}
+                                        onChange={(e) => form.setCreditTotal(e.target.value)}
+                                    />
                                 </div>
-                            ))}
+                                <div className="flex flex-col justify-end gap-[5px] h-full">
+                                    <label className="text-[12px] text-gray-600">
+                                        <span className="block">ชั่วโมงบรรยาย</span>
+                                        <span className="block">(Lecture)</span>
+                                    </label>
+                                    <input
+                                        id="creditLecture"
+                                        className={getInputClass(form.creditLecture)}
+                                        placeholder="เช่น 3"
+                                        value={form.creditLecture}
+                                        onChange={(e) => form.setCreditLecture(e.target.value)}
+                                    />
+                                </div>
+                                <div className="flex flex-col justify-end gap-[5px] h-full">
+                                    <label className="text-[12px] text-gray-600">
+                                        <span className="block">ชั่วโมงปฏิบัติการ</span>
+                                        <span className="block">(Lab/Practical)</span>
+                                    </label>
+                                    <input
+                                        id="creditLab"
+                                        className={getInputClass(form.creditLab)}
+                                        placeholder="เช่น 0"
+                                        value={form.creditLab}
+                                        onChange={(e) => form.setCreditLab(e.target.value)}
+                                    />
+                                </div>
+                                <div className="flex flex-col justify-end gap-[5px] h-full">
+                                    <label className="text-[12px] text-gray-600">
+                                        <span className="block">ชั่วโมงศึกษาด้วยตนเอง</span>
+                                        <span className="block">(Self-study)</span>
+                                    </label>
+                                    <input
+                                        id="creditSelfStudy"
+                                        className={getInputClass(form.creditSelfStudy)}
+                                        placeholder="เช่น 6"
+                                        value={form.creditSelfStudy}
+                                        onChange={(e) => form.setCreditSelfStudy(e.target.value)}
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="flex flex-col gap-[5px] h-full">
-                        <label className="text-[13px] font-semibold text-[#1b3860]">
-                            จำนวนหน่วยกิต <span className="text-red-500">*</span>
-                        </label>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-[10px] mt-auto">
-                            <div className="flex flex-col justify-end gap-[5px] h-full">
-                                <label className="text-[12px] text-gray-600">ชั่วโมงบรรยาย (Lecture)</label>
+                        {/* ภาค/ปีการศึกษา: ให้กินพื้นที่ 1 ส่วน (lg:col-span-1) ทำให้ขนาดดูสมส่วนขึ้น */}
+                        <div className="flex flex-col gap-[5px] h-full lg:col-span-1">
+                            <label className="text-[13px] font-semibold text-[#1b3860]">
+                                ภาค/ปีการศึกษา <span className="text-red-500">*</span>
+                            </label>
+                            <div className="flex flex-col justify-end gap-[5px] mt-auto">
+                                <label className="text-[12px] text-gray-600">
+                                    <span className="block">ปีการศึกษา</span>
+                                    <span className="block">(Academic Year)</span>
+                                </label>
                                 <input
-                                    id="creditLecture"
-                                    className={getInputClass(form.creditLecture)}
-                                    placeholder="เช่น 3"
-                                    value={form.creditLecture}
-                                    onChange={(e) => form.setCreditLecture(e.target.value)}
-                                />
-                            </div>
-                            <div className="flex flex-col justify-end gap-[5px] h-full">
-                                <label className="text-[12px] text-gray-600">ชั่วโมงปฏิบัติการ (Lab/Practical)</label>
-                                <input
-                                    id="creditLab"
-                                    className={getInputClass(form.creditLab)}
-                                    placeholder="เช่น 0"
-                                    value={form.creditLab}
-                                    onChange={(e) => form.setCreditLab(e.target.value)}
-                                />
-                            </div>
-                            <div className="flex flex-col justify-end gap-[5px] h-full">
-                                <label className="text-[12px] text-gray-600">ชั่วโมงศึกษาด้วยตนเอง (Self-study)</label>
-                                <input
-                                    id="creditSelfStudy"
-                                    className={getInputClass(form.creditSelfStudy)}
-                                    placeholder="เช่น 6"
-                                    value={form.creditSelfStudy}
-                                    onChange={(e) => form.setCreditSelfStudy(e.target.value)}
+                                    id="termYear"
+                                    className={getInputClass(form.termYear)}
+                                    placeholder="เช่น 2568"
+                                    value={form.termYear}
+                                    onChange={(e) => form.setTermYear(e.target.value)}
                                 />
                             </div>
                         </div>
-                    </div>
-                    <div className="flex flex-col gap-[5px] h-full">
-                        <label className="text-[13px] font-semibold text-[#1b3860]">
-                            ภาค/ปีการศึกษา <span className="text-red-500">*</span>
-                        </label>
-                        <div className="flex flex-col justify-end gap-[5px] mt-auto">
-                            <label className="text-[12px] text-gray-600">ปีการศึกษา (Academic Year)</label>
-                            <input
-                                id="termYear"
-                                className={getInputClass(form.termYear)}
-                                placeholder="เช่น 2568"
-                                value={form.termYear}
-                                onChange={(e) => form.setTermYear(e.target.value)}
-                            />
-                        </div>
+
                     </div>
 
                     <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
@@ -269,12 +210,16 @@ export default function Category1Page() {
                                     className="flex items-center gap-[6px] text-[13px] text-gray-700 cursor-pointer"
                                 >
                                     <input
-                                        type="checkbox"
+                                        type="radio"
+                                        name="courseCategory"
                                         className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
                                         checked={!!form.courseTypes[t.id]}
-                                        onChange={(e) =>
-                                            handleCourseTypeChange(t.id, e.target.checked)
-                                        }
+                                        onChange={(e) => {
+                                            const newTypes = { ...form.courseTypes };
+                                            ["1", "2.1", "2.2", "2.3", "2.4", "3"].forEach(k => newTypes[k] = false);
+                                            newTypes[t.id] = e.target.checked;
+                                            form.setCourseTypes(newTypes);
+                                        }}
                                     />{" "}
                                     {t.label}
                                 </label>
@@ -287,21 +232,25 @@ export default function Category1Page() {
                         </label>
                         <div className="flex flex-wrap gap-y-[10px] gap-x-[18px] bg-gray-50 border border-gray-200 rounded-[8px] py-[12px] px-[14px]">
                             {[
-                                { id: "1", label: "1. วิชาบรรยาย" },
-                                { id: "2", label: "2. ปฏิบัติการ" },
-                                { id: "3", label: "3. วิชาบรรยายและปฏิบัติการ" },
+                                { id: "format-1", label: "1. วิชาบรรยาย" },
+                                { id: "format-2", label: "2. ปฏิบัติการ" },
+                                { id: "format-3", label: "3. วิชาบรรยายและปฏิบัติการ" },
                             ].map((t) => (
                                 <label
                                     key={t.id}
                                     className="flex items-center gap-[6px] text-[13px] text-gray-700 cursor-pointer"
                                 >
                                     <input
-                                        type="checkbox"
+                                        type="radio"
+                                        name="courseFormat"
                                         className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
                                         checked={!!form.courseTypes[t.id]}
-                                        onChange={(e) =>
-                                            handleCourseTypeChange(t.id, e.target.checked)
-                                        }
+                                        onChange={(e) => {
+                                            const newTypes = { ...form.courseTypes };
+                                            ["format-1", "format-2", "format-3"].forEach(k => newTypes[k] = false);
+                                            newTypes[t.id] = e.target.checked;
+                                            form.setCourseTypes(newTypes);
+                                        }}
                                     />{" "}
                                     {t.label}
                                 </label>
@@ -315,10 +264,10 @@ export default function Category1Page() {
                         </label>
                         <div className="flex flex-wrap gap-y-[10px] gap-x-[18px] bg-gray-50 border border-gray-200 rounded-[8px] py-[12px] px-[14px]">
                             {[
-                                { id: "1", label: "1. I (Introduce)" },
-                                { id: "2", label: "2. R (Reinforce)" },
-                                { id: "3", label: "3. P (Practice)" },
-                                { id: "4", label: "4. M (Mastery)" },
+                                { id: "level-1", label: "1. I (Introduce)" },
+                                { id: "level-2", label: "2. R (Reinforce)" },
+                                { id: "level-3", label: "3. P (Practice)" },
+                                { id: "level-4", label: "4. M (Mastery)" },
                             ].map((t) => (
                                 <label
                                     key={t.id}

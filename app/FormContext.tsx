@@ -60,6 +60,7 @@ export interface EvaluationData {
 
 interface FormContextType {
   courseId: string;
+  creditTotal: string;
   creditLecture: string;
   creditLab: string;
   creditSelfStudy: string;
@@ -88,6 +89,7 @@ interface FormContextType {
 
   // Update state functions
   setCourseId: (v: string) => void;
+  setCreditTotal: (v: string) => void;
   setCreditLecture: (v: string) => void;
   setCreditLab: (v: string) => void;
   setCreditSelfStudy: (v: string) => void;
@@ -120,6 +122,7 @@ interface FormContextType {
 
 const defaultContext: FormContextType = {
   courseId: "",
+  creditTotal: "",
   creditLecture: "",
   creditLab: "",
   creditSelfStudy: "",
@@ -179,6 +182,7 @@ const defaultContext: FormContextType = {
   summaryRowOrder: [],
 
   setCourseId: () => { },
+  setCreditTotal: () => { },
   setCreditLecture: () => { },
   setCreditLab: () => { },
   setCreditSelfStudy: () => { },
@@ -210,6 +214,7 @@ const FormContext = createContext<FormContextType>(defaultContext);
 
 export function FormProvider({ children }: { children: ReactNode }) {
   const [courseId, setCourseId] = useState("");
+  const [creditTotal, setCreditTotal] = useState("");
   const [creditLecture, setCreditLecture] = useState("");
   const [creditLab, setCreditLab] = useState("");
   const [creditSelfStudy, setCreditSelfStudy] = useState("");
@@ -256,6 +261,7 @@ export function FormProvider({ children }: { children: ReactNode }) {
 
     return (
       courseId.trim() !== "" &&
+      creditTotal.trim() !== "" &&
       creditLecture.trim() !== "" &&
       creditLab.trim() !== "" &&
       creditSelfStudy.trim() !== "" &&
@@ -280,6 +286,7 @@ export function FormProvider({ children }: { children: ReactNode }) {
     <FormContext.Provider
       value={{
         courseId,
+        creditTotal,
         creditLecture,
         creditLab,
         creditSelfStudy,
@@ -305,6 +312,7 @@ export function FormProvider({ children }: { children: ReactNode }) {
         evaluationSummaries,
         summaryRowOrder,
         setCourseId,
+        setCreditTotal,
         setCreditLecture,
         setCreditLab,
         setCreditSelfStudy,

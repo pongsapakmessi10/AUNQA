@@ -116,45 +116,6 @@ export default function Category1Page() {
                             />
                         </div>
 
-                        <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
-                            <label className="text-[13px] font-semibold text-[#1b3860]">
-                                ปี/ภาคการศึกษา <span className="text-red-500">*</span>
-                            </label>
-                            <div className="grid grid-cols-2 gap-[10px] mt-auto">
-                                <div className="flex flex-col justify-end gap-[5px]">
-                                    <label className="text-[12px] text-gray-600">ปีที่</label>
-                                    <select
-                                        id="termSemester"
-                                        className={getInputClass(form.termSemester)}
-                                        value={form.termSemester}
-                                        onChange={(e) => form.setTermSemester(e.target.value)}
-                                    >
-                                        <option value="">-- เลือกปี --</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
-                                </div>
-                                <div className="flex flex-col justify-end gap-[5px]">
-                                    <label className="text-[12px] text-gray-600">ภาคการศึกษา (Semester)</label>
-                                    <select
-                                        id="termSemester"
-                                        className={getInputClass(form.termSemester)}
-                                        value={form.termSemester}
-                                        onChange={(e) => form.setTermSemester(e.target.value)}
-                                    >
-                                        <option value="">-- เลือกภาค --</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="summer">Summer</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
                         <div className="flex flex-col gap-[12px] col-span-1 sm:col-span-2 bg-gray-50 border border-gray-200 rounded-[8px] py-[16px] px-[18px]">
                             <div className="flex justify-between items-center">
                                 <label className="text-[13px] font-semibold text-[#1b3860]">
