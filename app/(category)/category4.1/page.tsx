@@ -36,7 +36,7 @@ function EvaluationSummaryTable({ form, showErrors }: { form: any, showErrors?: 
     return (
         <div className="mt-[32px] pt-[24px] border-t border-gray-200">
             <h3 className="text-[15px] font-bold text-[#1b3860] mb-[16px]">
-                สรุปแผนการประเมินผลการเรียนรู้
+                สรุปแผนการประเมินผลการเรียนรู้ 
             </h3>
             <div className="overflow-x-auto">
                 <table className="w-full border-collapse text-[13px] border border-gray-200 rounded-[8px] overflow-hidden">
@@ -388,17 +388,17 @@ export default function Category4Page() {
             <div className="py-[26px] px-[36px] border-t border-gray-200">
                 <div className="flex items-center gap-[10px] m-0 mb-[18px]">
                     <span className="bg-[#d5ae52] text-white font-bold text-[13px] px-[12px] py-[5px] rounded-full">
-                        หมวดที่ 4
+                        หมวดที่ 4.1
                     </span>
                     <h2 className="text-[16px] m-0 font-bold text-[#1b3860]">
-                        การประเมินผลการเรียนรู้
+                        การประเมินผลการเรียนรู้ (ปฏิบัติการ)
                     </h2>
                 </div>
 
                 <div className="w-full my-[20px] mb-[10px]">
                     <div className="mb-[20px]">
                         <label className="font-semibold text-[13px] text-[#1b3860] block mb-[10px]">
-                            เลือกรูปแบบการประเมินผล
+                            เลือกรูปแบบการประเมินผล (ปฏิบัติการ)
                         </label>
                         <div className="flex items-center gap-[20px]">
                             <label className="flex items-center gap-[6px] text-[13px] text-gray-700 cursor-pointer">
