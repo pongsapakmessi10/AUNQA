@@ -41,7 +41,7 @@ export default function Category5Page() {
       <div className="bg-white border-t border-gray-200">
 
         {/* Header */}
-        <div className="py-[26px] px-[36px] border-b border-gray-200">
+        <div className="py-4 md:py-[26px] px-4 md:px-[36px] border-b border-gray-200">
           <h1 className="text-[18px] font-bold text-gray-900 mb-1.5 m-0">
             หมวดที่ 5 การประเมินและปรับปรุงการดำเนินการของรายวิชา
           </h1>
@@ -51,9 +51,9 @@ export default function Category5Page() {
         </div>
 
         {/* Main Section */}
-        <div className="py-[26px] px-[36px]">
-          <div className="flex items-center gap-[10px] m-0 mb-[18px]">
-            <span className="bg-[#f2b705] text-[#2b2a26] font-bold text-[13px] px-[12px] py-[5px] rounded-full">
+        <div className="py-4 md:py-[26px] px-4 md:px-[36px]">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-[10px] m-0 mb-[18px]">
+            <span className="bg-[#f2b705] text-[#2b2a26] font-bold text-[13px] px-[12px] py-[5px] rounded-full whitespace-nowrap shrink-0">
               หมวดที่ 5
             </span>
             <h2 className="text-[16px] m-0 font-bold text-[#1b3860]">
