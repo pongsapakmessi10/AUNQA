@@ -175,143 +175,140 @@ export default function Category1Page() {
                             <label className="text-[13px] font-semibold text-[#1b3860]">
                                 ภาค/ปีการศึกษา <span className="text-red-500">*</span>
                             </label>
-                            <div className="flex flex-col justify-end gap-[5px] mt-auto">
-                                <label className="text-[12px] text-gray-600">
-                                    <span className="block">ปีการศึกษา</span>
-                                    <span className="block">(Academic Year)</span>
-                                </label>
+                            <label className="text-[12px] text-gray-600">
+                                <span className="block">ปีการศึกษา</span>
+                                <span className="block">(Academic Year)</span>
+                            </label>
+                            <input
+                                id="termYear"
+                                className={getInputClass(form.termYear)}
+                                placeholder="เช่น 2568"
+                                value={form.termYear}
+                                onChange={(e) => form.setTermYear(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
+                    <label className="text-[13px] font-semibold text-[#1b3860]">
+                        ประเภทของรายวิชา
+                    </label>
+                    <div className="flex flex-wrap gap-y-[10px] gap-x-[18px] bg-gray-50 border border-gray-200 rounded-[8px] py-[12px] px-[14px]">
+                        {[
+                            { id: "1", label: "1. วิชาศึกษาทั่วไป" },
+                            { id: "2.1", label: "2.1 วิชาพื้นฐานด้านวิชาชีพ/วิทยาศาสตร์" },
+                            { id: "2.2", label: "2.2 วิชาแกน" },
+                            { id: "2.3", label: "2.3 วิชาบังคับ" },
+                            { id: "2.4", label: "2.4 วิชาบังคับเลือก" },
+                            { id: "3", label: "3. วิชาเลือกเสรี" },
+                        ].map((t) => (
+                            <label
+                                key={t.id}
+                                className="flex items-center gap-[6px] text-[13px] text-gray-700 cursor-pointer"
+                            >
                                 <input
-                                    id="termYear"
-                                    className={getInputClass(form.termYear)}
-                                    placeholder="เช่น 2568"
-                                    value={form.termYear}
-                                    onChange={(e) => form.setTermYear(e.target.value)}
-                                />
-                            </div>
-                        </div>
+                                    type="radio"
+                                    name="courseCategory"
+                                    className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
+                                    checked={!!form.courseTypes[t.id]}
+                                    onChange={(e) => {
+                                        const newTypes = { ...form.courseTypes };
+                                        ["1", "2.1", "2.2", "2.3", "2.4", "3"].forEach(k => newTypes[k] = false);
+                                        newTypes[t.id] = e.target.checked;
+                                        form.setCourseTypes(newTypes);
+                                    }}
+                                />{" "}
+                                {t.label}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+                <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
+                    <label className="text-[13px] font-semibold text-[#1b3860]">
+                        ประเภทของรูปแบบการสอน
+                    </label>
+                    <div className="flex flex-wrap gap-y-[10px] gap-x-[18px] bg-gray-50 border border-gray-200 rounded-[8px] py-[12px] px-[14px]">
+                        {[
+                            { id: "format-1", label: "1. วิชาบรรยาย" },
+                            { id: "format-2", label: "2. ปฏิบัติการ" },
+                            { id: "format-3", label: "3. วิชาบรรยายและปฏิบัติการ" },
+                        ].map((t) => (
+                            <label
+                                key={t.id}
+                                className="flex items-center gap-[6px] text-[13px] text-gray-700 cursor-pointer"
+                            >
+                                <input
+                                    type="radio"
+                                    name="courseFormat"
+                                    className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
+                                    checked={!!form.courseTypes[t.id]}
+                                    onChange={(e) => {
+                                        const newTypes = { ...form.courseTypes };
+                                        ["format-1", "format-2", "format-3"].forEach(k => newTypes[k] = false);
+                                        newTypes[t.id] = e.target.checked;
+                                        form.setCourseTypes(newTypes);
+                                    }}
+                                />{" "}
+                                {t.label}
+                            </label>
+                        ))}
+                    </div>
+                </div>
 
+                <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
+                    <label className="text-[13px] font-semibold text-[#1b3860]">
+                        หมวดหมู่ระดับการเรียนรู้ <span className="text-[12px] font-normal text-gray-500 ml-[4px]">(สามารถเลือกได้มากกว่า 1 ช่อง)</span>
+                    </label>
+                    <div className="flex flex-wrap gap-y-[10px] gap-x-[18px] bg-gray-50 border border-gray-200 rounded-[8px] py-[12px] px-[14px]">
+                        {[
+                            { id: "level-1", label: "1. I (Introduce)" },
+                            { id: "level-2", label: "2. R (Reinforce)" },
+                            { id: "level-3", label: "3. P (Practice)" },
+                            { id: "level-4", label: "4. M (Mastery)" },
+                        ].map((t) => (
+                            <label
+                                key={t.id}
+                                className="flex items-center gap-[6px] text-[13px] text-gray-700 cursor-pointer"
+                            >
+                                <input
+                                    type="checkbox"
+                                    className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
+                                    checked={!!form.courseTypes[t.id]}
+                                    onChange={(e) =>
+                                        handleCourseTypeChange(t.id, e.target.checked)
+                                    }
+                                />{" "}
+                                {t.label}
+                            </label>
+                        ))}
                     </div>
+                </div>
 
-                    <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
-                        <label className="text-[13px] font-semibold text-[#1b3860]">
-                            ประเภทของรายวิชา
-                        </label>
-                        <div className="flex flex-wrap gap-y-[10px] gap-x-[18px] bg-gray-50 border border-gray-200 rounded-[8px] py-[12px] px-[14px]">
-                            {[
-                                { id: "1", label: "1. วิชาศึกษาทั่วไป" },
-                                { id: "2.1", label: "2.1 วิชาพื้นฐานด้านวิชาชีพ/วิทยาศาสตร์" },
-                                { id: "2.2", label: "2.2 วิชาแกน" },
-                                { id: "2.3", label: "2.3 วิชาบังคับ" },
-                                { id: "2.4", label: "2.4 วิชาบังคับเลือก" },
-                                { id: "3", label: "3. วิชาเลือกเสรี" },
-                            ].map((t) => (
-                                <label
-                                    key={t.id}
-                                    className="flex items-center gap-[6px] text-[13px] text-gray-700 cursor-pointer"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="courseCategory"
-                                        className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
-                                        checked={!!form.courseTypes[t.id]}
-                                        onChange={(e) => {
-                                            const newTypes = { ...form.courseTypes };
-                                            ["1", "2.1", "2.2", "2.3", "2.4", "3"].forEach(k => newTypes[k] = false);
-                                            newTypes[t.id] = e.target.checked;
-                                            form.setCourseTypes(newTypes);
-                                        }}
-                                    />{" "}
-                                    {t.label}
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
-                        <label className="text-[13px] font-semibold text-[#1b3860]">
-                            ประเภทของรูปแบบการสอน
-                        </label>
-                        <div className="flex flex-wrap gap-y-[10px] gap-x-[18px] bg-gray-50 border border-gray-200 rounded-[8px] py-[12px] px-[14px]">
-                            {[
-                                { id: "format-1", label: "1. วิชาบรรยาย" },
-                                { id: "format-2", label: "2. ปฏิบัติการ" },
-                                { id: "format-3", label: "3. วิชาบรรยายและปฏิบัติการ" },
-                            ].map((t) => (
-                                <label
-                                    key={t.id}
-                                    className="flex items-center gap-[6px] text-[13px] text-gray-700 cursor-pointer"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="courseFormat"
-                                        className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
-                                        checked={!!form.courseTypes[t.id]}
-                                        onChange={(e) => {
-                                            const newTypes = { ...form.courseTypes };
-                                            ["format-1", "format-2", "format-3"].forEach(k => newTypes[k] = false);
-                                            newTypes[t.id] = e.target.checked;
-                                            form.setCourseTypes(newTypes);
-                                        }}
-                                    />{" "}
-                                    {t.label}
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
-                        <label className="text-[13px] font-semibold text-[#1b3860]">
-                            หมวดหมู่ระดับการเรียนรู้ <span className="text-[12px] font-normal text-gray-500 ml-[4px]">(สามารถเลือกได้มากกว่า 1 ช่อง)</span>
-                        </label>
-                        <div className="flex flex-wrap gap-y-[10px] gap-x-[18px] bg-gray-50 border border-gray-200 rounded-[8px] py-[12px] px-[14px]">
-                            {[
-                                { id: "level-1", label: "1. I (Introduce)" },
-                                { id: "level-2", label: "2. R (Reinforce)" },
-                                { id: "level-3", label: "3. P (Practice)" },
-                                { id: "level-4", label: "4. M (Mastery)" },
-                            ].map((t) => (
-                                <label
-                                    key={t.id}
-                                    className="flex items-center gap-[6px] text-[13px] text-gray-700 cursor-pointer"
-                                >
-                                    <input
-                                        type="checkbox"
-                                        className="accent-[#d5ae52] w-[15px] h-[15px] cursor-pointer"
-                                        checked={!!form.courseTypes[t.id]}
-                                        onChange={(e) =>
-                                            handleCourseTypeChange(t.id, e.target.checked)
-                                        }
-                                    />{" "}
-                                    {t.label}
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
-                        <label className="text-[13px] font-semibold text-[#1b3860]">
-                            2. คำอธิบายรายวิชา (ภาษาไทย) <span className="text-red-500">*</span>
-                        </label>
-                        <textarea
-                            id="descTh"
-                            rows={4}
-                            className={getInputClass(form.descTh)}
-                            placeholder="หลักการและแนวคิดเกี่ยวกับการประเมินวัฏจักรชีวิตของผลิตภัณฑ์ (LCA) ..."
-                            value={form.descTh}
-                            onChange={(e) => form.setDescTh(e.target.value)}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
-                        <label className="text-[13px] font-semibold text-[#1b3860]">
-                            Course Description (English) <span className="text-red-500">*</span>
-                        </label>
-                        <textarea
-                            id="descEn"
-                            rows={4}
-                            className={getInputClass(form.descEn)}
-                            placeholder="Principle and concept of life cycle assessment (LCA), green input, ..."
-                            value={form.descEn}
-                            onChange={(e) => form.setDescEn(e.target.value)}
-                        />
+                <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
+                    <label className="text-[13px] font-semibold text-[#1b3860]">
+                        2. คำอธิบายรายวิชา (ภาษาไทย) <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                        id="descTh"
+                        rows={4}
+                        className={getInputClass(form.descTh)}
+                        placeholder="หลักการและแนวคิดเกี่ยวกับการประเมินวัฏจักรชีวิตของผลิตภัณฑ์ (LCA) ..."
+                        value={form.descTh}
+                        onChange={(e) => form.setDescTh(e.target.value)}
+                    />
+                </div>
+                <div className="flex flex-col gap-[5px] col-span-1 sm:col-span-2">
+                    <label className="text-[13px] font-semibold text-[#1b3860]">
+                        Course Description (English) <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                        id="descEn"
+                        rows={4}
+                        className={getInputClass(form.descEn)}
+                        placeholder="Principle and concept of life cycle assessment (LCA), green input, ..."
+                        value={form.descEn}
+                        onChange={(e) => form.setDescEn(e.target.value)}
+                    />
                     </div>
                 </div>
             </div>
